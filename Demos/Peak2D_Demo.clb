@@ -1,0 +1,141 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates peak finding of a surface.  Works by fitting a parabola to the data around the max value and then returning the location of the peak of the parabola.
+
+Three surfaces are generated using the user defined function 'PeakFunc'.  Each has a different peak.  Then PeakLoc is called three times to find each surfaces peak.
+
+Note: This method of generating the surfaces is slow.  For a faster way see Graph3D_Demo.
+
+
+[NotesEnd]
+
+[CommandsStart]
+1 a = PeakFunc(0:20, 0:20, 10.00001, 0.0000)  // Make surface 'a' with peak defined by last two parameters
+1 b = PeakFunc(0:20, 0:20, 10.99999, 10.99999)  // Make surface 'b' with peak defined by last two parameters
+1 c = PeakFunc(0:20, 0:20, 10.5, 10.5)  // Make surface 'c' with peak defined by last two parameters
+1 a1 = PeakLoc(a)  // Find the peaks...
+1 b1 = PeakLoc(b)
+1 c1 = PeakLoc(c)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+// Makes a surface with 'rowval' rows and 'colvals' columns
+// whose peak is at pklocrow, pkloccol
+
+PeakFunc(rowvals, colvals, pklocrow, pkloccol)
+{
+	retmat = newmat(cols(rowvals), cols(colvals), 0);
+	
+	for(r=0; r<cols(rowvals); r+=1)
+		for(c=0; c<cols(colvals); c+=1)	
+		{
+			retmat{r,c} = (rowvals{0,r} - pklocrow)^2 + (colvals{0,c} - pkloccol)^2;
+			retmat{r,c} += 1.9*(rowvals{0,r} - pklocrow) * (colvals{0,c} - pkloccol);
+			retmat{r,c} += 32.1;
+		}
+	
+	return(retmat * -1);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+487
+747
+170
+575
+Figure 1
+3
+[TextVarStart]
+a1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+b1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+c1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+51
+310
+592
+1268
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+316
+753
+583
+1268
+PeakFunc
+[FuncWndEnd]
+
+[NumSigFigsStart]
+10
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,77 @@
+[Format=1.0]
+
+[NotesStart]
+Solves the singular system of equations:
+
+3a + 4b = 9
+9a + 12b = 13
+
+gets a soln of a = 0.576 and b = 0.768.
+
+Since the sys is singular there's really no solution but CalcLab returns closest solution.
+
+Fiddle with cmd 7 and look at error and error2 to check it.
+[NotesEnd]
+
+[CommandsStart]
+1 m = [3,14;9,12]
+1 rhs = [9;13]
+1 soln = linearsysofeq(m, rhs)
+1 try = m*@soln
+1 delta = rhs -@ try
+1 error = mag(delta)
+1 soln2 = soln + 0.001
+1 try2 = m*@soln2
+1 delta2 = rhs -@ try2
+1 error2 = mag(delta2)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,89 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 paperwork = 900
+1 socialworker = 4300
+1 agency = 15000
+1 postsocial = 5000
+1 readoption = 2000
+1 trip = 10000
+1 agency = 10000
+1 orphanage = 5000
+1 total = paperwork + socialworker + agency + trip + postsocial + readoption + orphanage
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-12
+-8
+-1
+-1
+56
+200
+636
+912
+Figure 1
+1
+[TextVarStart]
+total
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

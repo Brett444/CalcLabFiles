@@ -1,0 +1,107 @@
+[Format=1.1]
+
+[NotesStart]
+Uses YNOT approx to calc circumference of ellipse and the length of an ellipsed if it were stretched straight (ie half of the circumference).
+
+This approx is accurate to .362%  (ie .00362 inches per inch)
+
+
+[NotesEnd]
+
+[CommandsStart]
+1 a = 8  // major radius
+1 b = a/2  // minor radius
+1 y = 1.5349285356613752  // the ynot constant
+1 ellipsecircum = 4 * (a^y + b^y)^(1/y)
+1 strechedstraight = ellipsecircum/2  // ellipse stretched straight
+1 circ = pi*a  // circle stretched straight
+1 line = a*2
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+61
+343
+1152
+1360
+Figure 1
+3
+[TextVarStart]
+circ
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+line
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+strechedstraight
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+12
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1440
+900
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

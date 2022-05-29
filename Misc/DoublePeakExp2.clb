@@ -1,0 +1,221 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 desiredbin = 51.5
+1 ringwidth = 512 / desiredbin
+1 be = newmat(1024, 1024, 0)
+1 be = BullseyeGen(be, ringwidth, ringwidth, 10)
+1 idealline_1d = be{512,#}
+1 impresp = newmat(1024, 1024, 0)
+1 impresp{472:552, 508:516} = 5
+1 impresp_1d = impresp{512,#}
+1 beimg = Conv_FFT(be, impresp)
+1 beimg = FFTShift(beimg)
+1 beimg += RandUnif(1024, 1024, -5, 5)
+0 beimg += RandGauss(1024, 1024, 0, 2)
+1 line = beimg{512,#}
+0 line = GetCentralPowerOf2(line)
+1 line2 = Apodize(line, 1024/8, 0)
+0 line2 = PadToNewSize(line2, 1, 65536)
+1 spec = FFTMags(line2)
+1 berestore = DeConv_FFT(beimg, impresp, 0)
+1 berestore_1d = DeConv_FFT(line, impresp_1d, 0)
+1 berestore = FFTShift(berestore)
+0 desiredbin = 1024 / (ringwidth*2)
+1 restorespec_1d = FFTMags(berestore_1d)
+1 idealspec_1d = FFTMags(idealline_1d)
+1 bemags = FFTMags(beimg)
+1 bephases = FFTPhases(beimg)
+1 mask = newmat(1024, 1024, 0)
+1 mask = AddCircle(mask, 512, 512, 51, 1, 5)
+1 bemags *= mask
+1 imprespmags = FFTMags(impresp)
+1 imprespphases = FFTPhases(impresp)
+1 tempmags = bemags / imprespmags
+1 tempphases = bephases - imprespphases
+1 origbe = FFTShift(InvFFT(tempmags, tempphases))
+1 origline = origbe{512, #}
+1 origlinemags = FFTMags(origline)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-2
+-2
+-1
+-1
+266
+1232
+2312
+3840
+Figure 1
+45.138082
+57.122782
+2.000000
+46.000000
+-888.870576
+11659.890500
+2000.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+spec
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-2
+-2
+-1
+-1
+166
+1362
+2662
+3778
+berestore
+1
+1
+-1
+1.00
+0,1023,0,1023
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-2
+-2
+-1
+-1
+666
+1962
+2080
+3378
+beimg
+1
+1
+-1
+1.00
+0,1023,0,1023
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-2
+-2
+-1
+-1
+754
+1944
+1102
+2276
+origbe
+1
+1
+0
+1.00
+0,1023,0,1023
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-2
+-2
+-1
+-1
+1352
+1836
+2950
+3778
+Figure 1
+2
+[TextVarStart]
+desiredbin
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+ringwidth
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

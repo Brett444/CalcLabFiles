@@ -1,0 +1,176 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Users\Brett\Downloads\CortexStar2.4.0024.8b_0.00G_30.000ms.0_0.000D_.png)
+1 img0 = Rebin(img1, 4, 4)
+1 imgf = img0
+1 hedges = Conv(img0, edge_horiz)
+1 vedges = Conv(img0, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 edgesT = edges
+1 imgcanny = CannyEdges(img0, 240, 200)
+1 dmy = Threshold(img0, 0, 240, 170)
+0 imgcanny = edgesT
+1 conts_canny = Contours(img0)
+1 drawn_c = DrawContours(conts_canny, 375, 500, 0)
+1 contlens = ContourLengths(conts_canny)
+0 n=166
+0 onecont = conts_canny{#, n:n+1}   // {#, 286:287}  {#, 276:277}
+0 drawn1 = DrawContours(onecont, 375, 500, 0)
+0 img0 = MedianFltr(img0, 0)
+1 conncomps = ConnectedComponents(img0, 4)
+1 conncomps0 = conncomps
+1 connareas = ConnCompsAreas(conncomps)
+1 conncomps = ConnCompsFilterAreas(conncomps, 200)
+1 conncomps = ConnCompsFilterDiags(conncomps, 55)
+1 conndiags = ConnCompsDiags(conncomps)
+1 erodekern = newmat(3,3,1)
+0 erodekern{#,1} = 1
+0 erodekern{1,#} = 1
+0 dmy = Erode(conncomps, erodekern)
+1 com = round(CenterOfMass(conncomps))
+1 nearpts = NearPoints(conncomps, com{0,0}, com{0,1}, 6)
+1 markval = 200
+1 conncomps = AddDisk(conncomps, nearpts{0,0}, nearpts{0,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{1,0}, nearpts{1,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{2,0}, nearpts{2,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{3,0}, nearpts{3,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{4,0}, nearpts{4,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{5,0}, nearpts{5,1}, 2, markval, 1)
+1 conncomps = AddDisk(conncomps, nearpts{6,0}, nearpts{6,1}, 2, markval, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+207
+1322
+1594
+2696
+img1
+1
+1
+-1
+1.00
+1144,3276,632,2678
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+224
+1350
+2721
+3749
+conncomps
+1
+1
+1
+1.00
+286,782,160,676
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1323
+2258
+1601
+2683
+conncomps0
+1
+1
+1
+0.26
+262,784,188,608
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1368
+2106
+2162
+3600
+Figure 1
+1
+[TextVarStart]
+nearpts
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

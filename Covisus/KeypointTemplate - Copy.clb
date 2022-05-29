@@ -1,0 +1,251 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 mtype = 2
+1 maxpnts = 500
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_1.png)
+1 img1 = Rebin(img1, 4, 4)
+1 template = ReadImage(C:\TempImages\TriTemplate.png)
+1 template = newmat(750, 1000, 0)
+1 template = AddLineSeg(template, 320, 335, 127, 362, 4, 255)
+1 template = AddLineSeg(template, 127, 362, 100, 500, 4, 255)
+1 template = AddLineSeg(template, 100, 500, 200, 500, 4, 255)
+1 template = BlurGauss(template, 5)
+1 template = Shift(template, 70, 60, 0)
+0 template = Rotate(template, -40, 0, 1)
+1 hedges = Conv(img1, edge_horiz)
+1 vedges = Conv(img1, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 edgesT = edges
+1 imgcanny = CannyEdges(img1, 240, 200)
+1 dmy = Threshold(edgesT, 0, 240, 170)
+1 dmy = Threshold(img1, 0, 255, 180)
+1 kpts1 = Keypoints(img1, mtype, maxpnts)
+0 img2 = img1
+0 img2 = Rotate(img1, 30, 0, 1)
+0 img2 = Shift(img2, 50, 60, 0)
+1 kpts2 = Keypoints(template, mtype, maxpnts)
+1 matchmap = KeypointMatch(kpts1, kpts2, 0.25, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_2 = GetRowsTwoLayers(kpts1, 0:RowsPerLayer(kpts1)-1)
+1 img1marks = MarkLocations(img1, matches1_2{0:Rows(matches1_2)/2-1, 0:1}, 3, 1, 600)
+1 matches1_2 = GetRowsTwoLayers(kpts2, 0:RowsPerLayer(kpts2)-1)
+1 img2marks = MarkLocations(template, matches1_2{0:Rows(matches1_2)/2-1, 0:1}, 3, 1, 600)
+1 matches1_2 = GetRowsTwoLayers(kpts1, keeprows)
+1 matchmarks = MarkLocations(img1, matches1_2{0:Rows(matches1_2)/2-1, 0:1}, 3, 1, 600)
+1 numkpts1 = RowsPerLayer(kpts1)
+1 numkpts2 = RowsPerLayer(kpts2)
+1 nummatches = Rows(matchmap)
+0 convres = Conv(edgesT, template)
+0 templateCrp = template{275:485, 400:640}
+[CommandsEnd]
+
+[NumFunctionsStart]
+4
+[NumFunctionsEnd]
+
+[FunctionStart]
+GetRowsTwoLayers(sourcemat, keeprows)
+{
+	keeprows = Clip(keeprows, 0, 1e9);
+	
+	mat1 = GetLayer(sourcemat, 0);
+	mat2 = GetLayer(sourcemat, 1);
+	
+	mat1 = mat1{keeprows, #};
+	mat2 = mat2{keeprows, #};
+	
+	finalmat = mat1;
+	finalmat = AddLayer(finalmat, mat2);
+	
+	return(finalmat);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GetNewMatches(img1, rshift, cshift, rot, oldkpmatches)
+{
+	imgn = Rotate(img1, rot, 0, 1);
+	imgn = Shift(imgn, cshift, rshift, 0);
+	kptsn =  Keypoints(imgn, 1, 1000);
+	map = KeypointMatch(oldkpmatches, kptsn, 0.7, 1, Rows(imgn), Cols(imgn));
+	keeprows = map{#,0};
+	newkpmatches = GetRowsTwoLayers(oldkpmatches, keeprows);
+	
+	return(newdpmatches);
+}
+[FunctionEnd]
+
+[FunctionStart]
+MakeNewMarkedImage(img1, newkpmatches)
+{
+	lastrow = RowsPerLayer(newkpmatches)-1;
+	newimg = MarkLocations(img1, newkpmatches{0:lastrow, 0,1}, 3, 1, 600);
+	
+	return(newimg);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GenMarkedImages(img1, kpts1)
+{
+	oldmatches = kpts1;
+	vid = img1;
+	for(i=0; i<20; i+=1)
+	{
+		newmatches = GetNewMatches(img1, i*5, i*5, i*15, oldmatches);
+		imgn = MakeNewMarkedImg(img1, newmatches);
+		vid = AddLayer(vid, imgn);
+		oldmatches = newmatches;
+	}
+	
+	return(vid);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+196
+1102
+1508
+2584
+img1marks
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+198
+1096
+2574
+3637
+img2marks
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1111
+2009
+1508
+2588
+matchmarks
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1111
+1832
+2575
+3163
+Figure 1
+3
+[TextVarStart]
+numkpts1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+numkpts2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+nummatches
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

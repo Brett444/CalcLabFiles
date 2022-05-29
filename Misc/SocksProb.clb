@@ -1,0 +1,129 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 answer = socks()
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+Socks()
+{
+	soln = newmat(5,2,0);
+	numsolns = 0;
+	maxb = 20;
+	maxr = 40;
+	
+	for(nb=1; nb<=maxb; nb+=1)
+		for(nr=1; nr<=maxr; nr+=1)
+		{
+			if (numsolns >= 5)
+			{
+				nb = maxb;
+				break;
+			}
+			
+			odds = nr/(nr+nb);
+			odds *= (nr-1)/(nr-1+nb);
+			
+			if (odds > 0.5)
+				break;
+				
+			if (odds == 0.5)
+			{
+				soln{numsolns, 0} = nb;
+				soln{numsolns, 1} = nr;
+				numsolns += 1;
+			}
+		}
+	
+	return(soln);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-12
+-8
+-1
+-1
+128
+344
+408
+732
+Figure 1
+1
+[TextVarStart]
+answer
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-12
+-8
+-1
+-1
+48
+824
+564
+1044
+Socks
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

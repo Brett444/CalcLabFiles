@@ -1,0 +1,169 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates a 2D FFT.
+
+First a surface is created which is the product of two cosine waves.  Then the 2D FFT is taken and the spectrum is graphed.
+[NotesEnd]
+
+[CommandsStart]
+1 fqs = FFTFreqs(128, 1)
+1 rowinfo = [0,0,0,0]  // Create rowinfo vector
+1 rowinfo{0,0} = 128  // Num of rows is set here
+1 rowinfo{0,1} = 10  // Amplitude is set here
+1 rowinfo{0,2} = fqs{0,2}  // Row frequency is set here
+1 rowinfo{0,3} = 0  // Row phase is set here
+1 colinfo = rowinfo  // Column info will be the same as the row info
+1 b1 = basisfunc(rowinfo, colinfo)  // Create the surface
+1 mags = fftmags(b1)
+1 phases = fftphases(b1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+BasisFunc(rowinfo, colinfo)
+{
+	numrows = rowinfo{0,0};
+	ampr = rowinfo{0,1};
+	freqr = rowinfo{0,2};
+	phaser = rowinfo{0,3};
+	
+	numcols = colinfo{0,0};
+	ampc = colinfo{0,1};
+	freqc = colinfo{0,2};
+	phasec = colinfo{0,3};
+	
+	bfunc = newmat(numrows, numcols, 0);
+	
+	rowvals = (0:numrows-1)';  colvals = 0:numcols-1;
+	rowvals = expandcolvec(rowvals, numcols);
+	colvals = expandrowvec(colvals, numrows);
+	
+	bfunc = ampr*cos(2*pi*freqr*rowvals + phaser) * cos(2*pi*freqc*colvals + phasec);
+	
+	return(bfunc);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+2
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+50
+417
+866
+1277
+Figure 1
+1
+1
+123.565216
+-0.472523
+-0.156279
+-0.096263
+-0.861993
+[SurfStart]
+b1
+Var1
+Var1
+255
+128
+0
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+421
+760
+866
+1278
+Figure 2
+1
+1
+115.199989
+0.528053
+0.087575
+0.076316
+0.841229
+[SurfStart]
+mags
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+499
+676
+392
+850
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

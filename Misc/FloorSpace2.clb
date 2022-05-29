@@ -1,0 +1,92 @@
+[Format=1.0]
+
+[NotesStart]
+Total Floor Space
+
+127-B N. Lima
+
+[NotesEnd]
+
+[CommandsStart]
+1 r1 = 9.417 * 5.333  // comp room
+1 r2 = 13.417 * 12.417  // dining room
+1 r3 = 9.4166 * 26  // kitchen, util, laundry
+1 r4 = 15 * 13.5  // bed room
+1 r5 = 7.833 * 12.5  // bathroom, util, pantry
+1 r6 = 13.667 * 15  // living room
+1 c1 = 4 * 5  // closet
+1 c2 = 4 * 5  // closet
+1 total = r1+r2+r3+r4+r5+r6+c1+c2
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+185
+749
+-1
+-1
+248
+368
+732
+936
+Total Floor Space
+1
+[TextVarStart]
+total
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+1
+16
+749
+-1
+-1
+80
+224
+732
+1032
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

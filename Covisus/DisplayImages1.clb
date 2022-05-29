@@ -1,0 +1,209 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img0 = ReadImage(C:\Covisus\CollarSet1B\Collar.0000.8b_2.00G_30.000ms.1.png)
+1 img1 = ReadImage(C:\Covisus\CollarSet1B\Collar.0001.8b_2.00G_30.000ms.1.png)
+1 img2 = ReadImage(C:\Covisus\CollarSet1B\Collar.0002.8b_2.00G_30.000ms.1.png)
+1 img3 = ReadImage(C:\Covisus\CollarSet1B\Collar.0003.8b_2.00G_30.000ms.1.png)
+1 img4 = ReadImage(C:\Covisus\CollarSet1B\Collar.0004.8b_2.00G_30.000ms.1.png)
+1 img0 = Decimate(img0, 4, 4)
+1 img1 = Decimate(img1, 4, 4)
+1 img2 = Decimate(img2, 4, 4)
+1 img3 = Decimate(img3, 4, 4)
+1 img4 = Decimate(img4, 4, 4)
+0 ////////////////////////////////////////////////////////////
+1 circles = HoughCircularOCV(img0, 0.1, 70, 150, 165, 240)
+1 circles = SortCol(circles, 2, 1, 1)
+1 img0 = AddCircle(img0, circles{0,1}, circles{0,0}, circles{0,2}, 255, 1)
+1 img0 = AddCircle(img0, circles{57,1}, circles{57,0}, circles{57,2}, 255, 1)
+0 ////////////////////////////////////////////////////////////
+1 circles = HoughCircularOCV(img1, 0.1, 70, 150, 165, 240)
+1 circles = SortCol(circles, 2, 1, 1)
+1 img1 = AddCircle(img1, circles{0,1}, circles{0,0}, circles{0,2}, 255, 1)
+1 img1 = AddCircle(img1, circles{32,1}, circles{32,0}, circles{32,2}, 255, 1)
+0 //////////////////////////////////////////////////////
+1 circles = HoughCircularOCV(img2, 0.1, 70, 150, 165, 240)
+1 circles = SortCol(circles, 2, 1, 1)
+1 img2 = AddCircle(img2, circles{1,1}, circles{1,0}, circles{1,2}, 255, 1)
+1 img2 = AddCircle(img2, circles{55,1}, circles{55,0}, circles{55,2}, 255, 1)
+0 //////////////////////////////////////////////////////
+1 circles = HoughCircularOCV(img3, 0.1, 70, 150, 165, 240)
+1 circles = SortCol(circles, 2, 1, 1)
+1 img3 = AddCircle(img3, circles{0,1}, circles{0,0}, circles{0,2}, 255, 1)
+1 img3 = AddCircle(img3, circles{37,1}, circles{37,0}, circles{37,2}, 255, 1)
+0 ////////////////////////////////////////////////////////
+1 circles = HoughCircularOCV(img4, 0.1, 70, 150, 165, 240)
+1 circles = SortCol(circles, 2, 1, 1)
+1 img4 = AddCircle(img4, circles{2,1}, circles{2,0}, circles{2,2}, 255, 1)
+1 img4 = AddCircle(img4, circles{29,1}, circles{29,0}, circles{29,2}, 255, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+5
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1029
+2330
+1342
+2646
+img0
+1
+1
+1
+1.00
+165,799,95,699
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+370
+1666
+1495
+2723
+img1
+1
+1
+1
+1.00
+172,768,83,685
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+423
+1739
+1381
+2734
+img2
+1
+1
+1
+1.00
+150,808,103,715
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+722
+2056
+1348
+2607
+img3
+1
+1
+1
+1.00
+167,777,69,689
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+764
+2018
+1499
+2702
+img4
+1
+1
+1
+1.00
+210,792,75,655
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+165
+1746
+2682
+3833
+Figure 1
+1
+[TextVarStart]
+circles
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

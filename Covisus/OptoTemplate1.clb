@@ -1,0 +1,229 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_1.png)
+1 img1 = Rebin(img1, 4, 4)
+1 hedges = Conv(img1, edge_horiz)
+1 vedges = Conv(img1, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 edgesT = edges
+1 dmy = Threshold(edgesT, 0, 240, 170)
+1 imgcanny = CannyEdges(img1, 240, 200)
+1 imgT = img1
+1 dmy = Threshold(imgT, 0, 255, 180)
+1 imgCC = imgT //  imgT, edgesT or imgcanny
+1 kern = newmat(15,15,0)
+1 kern = AddDisk(kern, 7, 7, 8, 1, 1)
+1 dmy = Dialate(imgCC, kern)
+1 conncomps = ConnectedComponents(imgCC, 4)
+1 connareas = ConnCompsAreas(conncomps)
+1 conncomps = ConnCompsFilterAreas(conncomps, 47000, 0)
+1 conncomps = ConnCompsFilterAreas(conncomps, 25000)
+1 dmy = Dialate(conncomps, kern)
+1 conncomps = Blur(conncomps, 25)
+0 imgcntrs = conncomps
+0 dmy = Threshold(imgcntrs, 0, 255, 1)
+0 cntrs = Contours(conncomps)
+0 drawnc = DrawContours(cntrs, 750, 1000)
+1 conncomps *= 250 / MaxVal(conncomps)
+1 template = BuildTemplate()
+1 template = Rotate(template, 43, 0, 1)
+0 template = Resize(template, 675, 675)
+1 tempmatch = TemplateMatchRot(conncomps, template, 1, 0, 355, 5)
+1 tmresult = GetLayer(tempmatch, 0)
+1 tempmatch = TemplateMatchRot(conncomps, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
+1 tmresult = GetLayer(tempmatch, 0)
+1 tmresult = tmresult{0, 0:3}
+1 corrresult = GetLayer(tempmatch, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+BuildTemplate()
+{
+	thick = 1;
+	retmat = newmat(1000, 1000, 0);
+	
+	retmat = AddLineSeg(retmat, 445, 322, 124, 362, thick);
+	retmat = AddLineSeg(retmat, 124, 362, 103, 502, thick);
+	retmat = AddLineSeg(retmat, 103, 502, 215, 500, thick);
+	retmat = AddLineSeg(retmat, 215, 500, 420, 770, thick);
+	retmat = AddLineSeg(retmat, 420, 770, 545, 714, thick);
+	retmat = AddLineSeg(retmat, 545, 714, 492, 618, thick);
+	retmat = AddLineSeg(retmat, 492, 618, 621, 306, thick);
+	retmat = AddLineSeg(retmat, 621, 306, 510, 218, thick);
+	retmat = AddLineSeg(retmat, 510, 218, 445, 322, thick);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	
+	size *= 1.5;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
+	com = CenterOfMass(retmat);
+	retmat = Shift(retmat, size/2-com{0,0}, size/2-com{0,1}, 0);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	size *= 1.25;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
+	
+	return(retmat);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+2
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+182
+1071
+1392
+2443
+img1
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+184
+1026
+2451
+3230
+template
+1
+1
+0
+1.00
+0,694,0,694
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+1
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+155
+1073
+2825
+3722
+Figure 1
+1
+1
+69.081467
+0.919722
+-0.012891
+0.387930
+-0.058786
+[SurfStart]
+corrresult
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1242
+1780
+2444
+3784
+Figure 1
+1
+[TextVarStart]
+tmresult
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

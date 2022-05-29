@@ -1,0 +1,142 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates how the correlation function can be used to detect the edges in an images.
+[NotesEnd]
+
+[CommandsStart]
+1 img = newmat(200, 200, 50)  // These four lines create the image
+1 img{30:170, 30:170} = 200
+1 img{60:140, 60:140} = 50
+1 img{90:110, 90:110} = 200
+1 HEdgeImg = crosscorr(img, edge_horiz)  // Do correlation to do edge detecting
+1 HEdgeImg *= HEdgeImg  // Some edes are pos and some neg depending on if the transition is light to dark or visa versa.  This makes all edges positive.
+1 HEdgeImg = scaledata(HEdgeImg, 0, 255)  // Scale the data for display
+1 VEdgeImg = crosscorr(img, edge_vert)  // Do correlation to do edge detecting
+1 VEdgeImg *= VEdgeImg  // Some edes are pos and some neg depending on if the transition is light to dark or visa versa.  This makes all edges positive.
+1 VEdgeImg = scaledata(VEdgeImg, 0, 255)  // Scale the data for display
+1 Edges = HEdgeImg + VEdgeImg  // Combine edges from each edge-image
+1 Edges = scaledata(Edges, 0, 255)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+4
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+0
+769
+-1
+-1
+259
+506
+809
+1039
+img
+1
+0
+1
+1
+0
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+513
+762
+814
+1042
+HEdgeImg
+1
+0
+1
+1
+0
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+160
+769
+-1
+-1
+511
+763
+1047
+1271
+VEdgeImg
+1
+0
+1
+1
+0
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+256
+507
+1047
+1269
+Edges
+1
+0
+1
+1
+0
+[ImageWndEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+55
+249
+814
+1269
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

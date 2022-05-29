@@ -1,0 +1,126 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates the Regress1D function.
+
+Performs a regression on data with some randomness added.  The user defined function RegressFunc defines what terms  will be used for the regression.  Once the coefficients are  generated, the function is generated and graphed along  with the original data.
+[NotesEnd]
+
+[CommandsStart]
+1 scores = [60, 70, 80, 85, 95]
+1 grades = [70, 65, 70, 95, 85]
+1 coeffs = Regress1D(scores, grades, 2, RegressFunc)
+1 rvals = coeffs{0,0} + coeffs{0,1}*scores
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+RegressFunc(x)
+{
+	vals = newmat(1,2);
+	
+	vals{0,0} = 1;
+	vals{0,1} = x;
+	
+	return(vals);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+87
+369
+907
+1212
+Figure 1
+60.000000
+95.000000
+10.000000
+60.000000
+61.000000
+99.000000
+10.000000
+70.000000
+2
+[DataSetStart]
+grades
+scores
+0
+0
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+rvals
+scores
+0
+0
+0
+0
+255
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

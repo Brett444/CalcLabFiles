@@ -1,0 +1,186 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 desiredbin = 51.5
+1 ringwidth = 512 / desiredbin
+1 be = newmat(1024, 1024, 0)
+1 be = BullseyeGen(be, ringwidth, 10)
+1 impresp = newmat(1024, 1024, 0)
+1 impresp{472:552, 508:516} = 5
+1 beimg = Conv_FFT(be, impresp)
+1 beimg = FFTShift(beimg)
+1 beimg += RandUnif(1024, 1024, -5, 5)
+0 beimg += RandGauss(1024, 1024, 0, 2)
+1 line = beimg{512,#}
+1 line = GetCentralPowerOf2(line)
+1 line = Apodize(line, 1024/8, 0)
+0 line = PadToNewSize(line, 1, 65536)
+1 spec = FFTMags(line)
+1 berestore = DeConv_FFT(beimg, impresp, 0)
+1 berestore = FFTShift(berestore)
+0 desiredbin = 1024 / (ringwidth*2)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+133
+616
+2005
+2769
+Figure 1
+35.308303
+66.480082
+10.000000
+40.000000
+-942.492807
+11155.788075
+2000.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+spec
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+2
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+73
+671
+1212
+1858
+berestore
+1
+1
+-1
+1.00
+0,1023,0,1023
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+52
+700
+2765
+3414
+beimg
+1
+1
+-1
+1.00
+0,1023,0,1023
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+692
+934
+1428
+1842
+Figure 1
+2
+[TextVarStart]
+desiredbin
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+ringwidth
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

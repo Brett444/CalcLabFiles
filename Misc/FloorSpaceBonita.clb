@@ -1,0 +1,117 @@
+[Format=1.0]
+
+[NotesStart]
+Sq Feet of House on Bonita ave
+
+Doesn't include closet space.
+
+Doesn't include small square patches
+in front of each bedroom.  These patches
+add an additional 25-30 sq feet.
+[NotesEnd]
+
+[CommandsStart]
+1 office = [20.33, 13.25]
+1 dining = [9.25, 9.46]
+1 kitchen = [8.83, 12.17]
+1 foyer =  [11.58, 5.67]
+1 living = [14.58, 19.08]
+1 hall = [17.67, 3]
+1 renee_bed = [11, 11]
+1 guest_bed = [11, 12]
+1 master_bed = [14, 12]
+1 guest_bath =  [8.58, 7.75]
+1 master_bath = [8.92, 6.67]
+1 washer = [7.58, 6.75]
+1 hall_closet1 = [2.5, 2.5]
+1 hall_closet2 = [2.5, 2.5]
+1 renee_closet = [2.5, 5]
+1 guest_closet = [2.5, 5]
+1 master_closet = [2.5, 12]
+1 hall_patches = [5.2, 5.2]  // 3x3 patch leading into each bedroom
+1 garage =  [21, 21.25]
+1 total_inside = prod(dining) + prod(foyer) + prod(guest_bath) + prod(guest_bed) + prod(hall) + prod(kitchen) + prod(living)
+1 total_inside += prod(master_bath) + prod(master_bed) + prod(office) + prod(renee_bed) + prod(washer)
+1 total_inside += prod(hall_closet1) + prod(hall_closet2) + prod(renee_closet ) + prod(guest_closet ) + prod(master_closet ) + prod(hall_patches )
+1 total_with_garage = total_inside + prod(garage)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+74
+290
+1146
+1366
+Figure 1
+2
+[TextVarStart]
+total_inside
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+total_with_garage
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1440
+900
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

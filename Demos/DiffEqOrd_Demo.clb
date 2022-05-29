@@ -1,0 +1,189 @@
+[Format=1.0]
+
+[NotesStart]
+Calculate the height and velocity as a function of time of a bullet fired straight up into the air.  Drag is accounted for and is taken to be proportional to velocity and opposite in sign.
+
+m - mass
+a - accel
+g - accel of gravity
+k - drag coeff
+v - velocity
+
+Diff eq:
+
+m*x'' = -m*g - k*x'
+
+Using v=x' leads to the system...
+
+x' = v
+v' = (-m*g - k*v) / m
+
+and this sys of two 1st order diff eqns is implemented in the user defined function 'Derivs'. 
+
+[NotesEnd]
+
+[CommandsStart]
+1 initheight = 0  // Set initial height here
+1 initvel = 200  // Set initial velocity here
+1 soln = DiffEqOrd(0, 11, .2, [initheight,initvel], .001, Derivs)  // first two params are start time and stop time
+1 time = soln{0,#}
+1 height = soln{1,#}
+1 vel = soln{2,#}
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+// Takes a vector containing x, v and t
+// and returns x' and v'
+
+Derivs(in)
+{
+	out = newmat(1, Size(in)-1, 0);
+	
+	m = 10;    // set mass here
+	k = 1;       // set drag coeff here
+	g = 32;     // set accel of gravity here
+	
+	pos = in{0,0};  // call it what it is
+	vel = in{0,1};   // call it what it is
+	
+	out{0,0} = vel;
+	out{0,1} = (-m*g - k*vel)/m;
+	
+	return(out);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+377
+739
+934
+1273
+Velocity vs Time
+0.000000
+11.000000
+5.000000
+0.000000
+-182.000000
+235.000000
+100.000000
+-100.000000
+1
+[DataSetStart]
+vel
+time
+0
+0
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+51
+374
+934
+1274
+Height vs Time
+0.000000
+11.000000
+5.000000
+0.000000
+-101.000000
+497.000000
+100.000000
+-100.000000
+1
+[DataSetStart]
+height
+time
+0
+0
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+50
+344
+405
+933
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+348
+741
+406
+932
+Derivs
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

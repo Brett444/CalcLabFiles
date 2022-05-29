@@ -1,0 +1,158 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 amp = 5
+1 noise = RandUnif(1, 2048, -1, 1)
+1 noiserms_a = RMS(noise)
+1 signal = amp*sin(0.5*[0:2047])
+1 data = signal + noise + 2
+1 noiserms_m = NoiseRMS(data)
+1 signalrms_a = amp/sqrt(2)
+1 signalrms_m = SignalRMS(data)
+1 snr_a = signalrms_a / noiserms_a
+1 snr_m = signalrms_m / noiserms_m
+1 snrdb_a = 20*log(signalrms_a / noiserms_a)
+1 snrdb_m1 = 20*log(signalrms_m / noiserms_m)
+1 snrdb_m2 = SNRdB(data)
+1 mags = FFTMags(data)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+94
+929
+1393
+1725
+Figure 1
+9
+[TextVarStart]
+signalrms_a
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+signalrms_m
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+noiserms_a
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+noiserms_m
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+snr_a
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+snr_m
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+snrdb_a
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+snrdb_m1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+snrdb_m2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

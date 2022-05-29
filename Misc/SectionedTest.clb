@@ -1,0 +1,219 @@
+[Format=2.0]
+
+[NotesStart]
+Using MatLab Filter Designer...
+
+In bottom pain, 
+
+* click coeffs-icon
+* enter coeffs
+* choose direct form 1
+* click import-filter and look at imp resp
+
+Use tf2sos from the MatLab command line to get the second order sectioned coefficients and final gain.
+
+Note: 
+You can comment in the commented lines and then
+adjust 'places' to see how many decimal places are 
+required to avoid instability.
+
+
+[NotesEnd]
+
+[CommandsStart]
+1 signal = 0:31
+0 signal = 0:1023
+1 signal *= 0
+1 signal{0,0} = 1
+1 incoeffs1 = [0.028,  0.053, 0.071,  0.053, 0.028]'
+1 outcoeffs1 = [-2.026, 2.148, -1.159, 0.279]'
+0 incoeffs1 = [0.093415769392179, -0.178193713615979, -0.101037694879458, 0.356387427231959, -0.078171918417622, -0.178193713615979, 0.085793843904901]'
+0 outcoeffs1 = [-5.761905933524637, 13.860761376939047, -17.821928448897303, 12.920351205351951, -5.008431762516176, 0.811153578860376]'
+0 places = 12
+0 incoeffs1 = Round(incoeffs1, places)
+0 outcoeffs1 = Round(outcoeffs1, places)
+1 gain1 = 1
+1 output1 = FilterIIR(incoeffs1, outcoeffs1, gain1, signal)
+1 incoeffs2 = [1.0, 1.5464, 1.0, 1.0, 0.3464, 1.0]
+1 outcoeffs2 = [-1.0646, 0.3696, -0.9614, 0.7549]
+1 gain2 = 0.028
+1 output2 = FilterIIRSectioned(incoeffs2, outcoeffs2, gain2, signal)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+82
+834
+2532
+3802
+Output1 (non sectioned)
+0.000000
+31.000000
+10.000000
+0.000000
+-0.119539
+0.322148
+0.100000
+-0.100000
+1
+1
+0
+0
+1
+[DataSetStart]
+output1
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+824
+1574
+2531
+3801
+Output2 (sectioned)
+0.000000
+31.000000
+10.000000
+0.000000
+-0.119557
+0.322140
+0.100000
+-0.100000
+1
+1
+0
+0
+1
+[DataSetStart]
+output2
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+2
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+865
+1536
+1545
+2017
+Figure 1
+1
+[TextVarStart]
+incoeffs1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+856
+1540
+1998
+2499
+Figure 2
+1
+[TextVarStart]
+outcoeffs1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+144
+847
+1554
+2533
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

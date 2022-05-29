@@ -1,0 +1,158 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\TempImages\img8.png)
+1 img1 = PadToNewSize(img1, 600, 600, 0, 1)
+1 img1 = Shift(img1, -50, -50, 0)
+1 kpts1 = Keypoints(img1, 2, 2000)
+1 vid = GenMarkedImages(img1, kpts1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+4
+[NumFunctionsEnd]
+
+[FunctionStart]
+GetRowsTwoLayers(sourcemat, keeprows)
+{
+	keeprows = Clip(keeprows, 0, 1e9);
+	
+	mat1 = GetLayer(sourcemat, 0);
+	mat2 = GetLayer(sourcemat, 1);
+	
+	mat1 = mat1{keeprows, #};
+	mat2 = mat2{keeprows, #};
+	
+	finalmat = mat1;
+	finalmat = AddLayer(finalmat, mat2);
+	
+	return(finalmat);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GetNewMatches(img1, rshift, cshift, rot, oldkpmatches)
+{
+	imgn = Rotate(img1, rot, 0, 1);
+	imgn = Shift(imgn, cshift, rshift, 0);
+	kptsn =  Keypoints(imgn, 2, 2000);
+	map = KeypointMatch(oldkpmatches, kptsn, 0.7, 1, Rows(imgn), Cols(imgn));
+	keeprows = map{#,0};
+	newkpmatches = GetRowsTwoLayers(oldkpmatches, keeprows);
+	
+	return(newkpmatches);
+}
+[FunctionEnd]
+
+[FunctionStart]
+MakeNewMarkedImage(img1, newkpmatches)
+{
+	lastrow = RowsPerLayer(newkpmatches)-1;
+	newimg = MarkLocations(img1, newkpmatches{0:lastrow, 0:1}, 3, 1, 600);
+	
+	return(newimg);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GenMarkedImages(img1, kpts1)
+{
+	oldmatches = kpts1;
+	// vid = img1;
+	numimgs = 20;
+	shiftstep = 100 / numimgs;
+	rotstep = 355 / numimgs;
+	for(i=1; i<=numimgs; i+=1)
+	{
+		newmatches = GetNewMatches(img1, i*shiftstep, i*shiftstep, i*rotstep, oldmatches);
+		imgn = MakeNewMarkedImage(img1, newmatches);
+		if (i == 1)
+			vid = imgn;
+		else
+			vid = AddLayer(vid, imgn);
+		oldmatches = newmatches;
+	}
+	
+	return(vid);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+2
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+117
+850
+2270
+3817
+GetNewMatches
+[FuncWndEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+856
+2078
+2270
+3823
+GenMarkedImages
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

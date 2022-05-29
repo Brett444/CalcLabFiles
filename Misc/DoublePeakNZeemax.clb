@@ -1,0 +1,166 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\MatlabWork\TwoFreqScript\Focus1_Bullseye0.tif)
+1 img1 = ReadImage(C:\MatlabWork\TwoFreqScript\test3.bmp)
+1 ch1 = GetChan(img1, 0, 0)
+1 ch2 = GetChan(img1, 1, 0)
+1 ch3 = GetChan(img1, 2, 0)
+1 img1 = ch1 + ch2 + ch3
+1 angle = 0
+1 pt1 = [512, 512]
+1 line = ExtractLine(img1, pt1{0,0}, pt1{0,1}, angle)
+0 line = img1{512,#}
+1 img1 = AddLine(img1, pt1{0,0}, pt1{0,1}, angle, 27000)
+1 line = GetCentralPowerOf2(line)
+1 line = Apodize(line, 1024/8, 0)
+1 line = PadToNewSize(line, 1, 65536)
+1 spec = FFTMags(line)
+1 freqs = FFTFreqs(1024, 1)
+1 specbuf = spec
+1 specbuf{0, 0:cols(spec)/64} = 0
+1 peakpos = PeakLoc(specbuf)
+1 peakval = Peak(specbuf)
+1 specbuf = SmashPeak(specbuf, 3)
+1 sidepos = PeakLoc(specbuf)
+1 sideval = Peak(specbuf)
+1 calcedbin = (peakpos*peakval + sidepos*sideval) / (peakval + sideval) / 64
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+91
+531
+993
+1823
+Figure 1
+1781.043891
+2246.213425
+100.000000
+1800.000000
+0.000000
+4.896061
+1.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+spec
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+1
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+0
+894
+2343
+3322
+img1
+1
+1
+0
+0.03
+33,989,91,933
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+527
+739
+1395
+1824
+Figure 1
+1
+[TextVarStart]
+calcedbin
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

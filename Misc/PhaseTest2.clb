@@ -1,0 +1,189 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 linelen = 2048
+1 halflen = linelen/2
+1 actpixelshift = 0.2
+1 phasebin = 20
+1 img = ReadImage(C:\LensBench\CalcLabFiles\MTF\image.tif) - 0.6
+1 line1 = ExtractLine(img, 493, 929, 0)
+1 line1 = PadToPowerOf2(line1)  // if image is loaded, check if linelen is right
+1 line2 = Shift(line1, actpixelshift, 0, 0, 0)
+1 ref = newmat(1, linelen, 0)
+1 ref{0, halflen-2:halflen+2} = [0.2, 0.7, 1, 0.7, 0.2]
+1 refshift = ShiftMeas(ref, line1)
+1 relativeshift = ShiftMeas(line1, line2)
+1 calcshift = refshift + relativeshift
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+40
+333
+1149
+1887
+Figure 1
+992.418115
+1043.261820
+10.000000
+1000.000000
+-1.000000
+4095.000000
+1000.000000
+0.000000
+1
+1
+0
+0
+2
+[DataSetStart]
+line1
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+line2
+Var2
+0
+1
+0
+0
+255
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+335
+665
+1150
+1423
+Figure 1
+3
+[TextVarStart]
+refshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+relativeshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+calcshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+1
+[NumCmdEditWndsEnd]
+
+[CmdEditWndStart]
+1
+-1
+-1
+-1
+-1
+138
+563
+456
+1149
+Cmd List 1
+linelen = 2048
+halflen = linelen/2
+actpixelshift = 0.2
+phasebin = 20
+img = ReadImage(C:\LensBench\CalcLabFiles\MTF\image.tif) - 0.6
+line1 = ExtractLine(img, 493, 929, 0)
+line1 = PadToPowerOf2(line1)  // if image is loaded, check if linelen is right
+line2 = Shift(line1, actpixelshift, 0, 0, 0)
+ref = newmat(1, linelen, 0)
+ref{0, halflen-2:halflen+2} = [0.2, 0.7, 1, 0.7, 0.2]
+refshift = ShiftMeas(ref, line1)
+relativeshift = ShiftMeas(line1, line2)
+calcshift = refshift + relativeshift
+[CmdEditWndEnd]
+

@@ -1,0 +1,253 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img0 = ReadImage(C:\Covisus\CollarSet3B\Collar.0004.8b_2.00G_30.000ms.1.png)
+1 img0 = Decimate(img0, 4, 4)
+1 hedges = Conv(img0, edge_horiz)
+1 vedges = Conv(img0, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 dmy = Threshold(edges, 0, 255, 50)
+0 edges = MedianFltr(edges, 5)
+1 centerguess = [388, 480]
+1 radiusguess = 172
+1 radiusrange = 2
+1 searchsize = 31
+1 corrres = CrossCorrCircle(edges, centerguess{0,0}, centerguess{0,1}, searchsize, searchsize, radiusguess, radiusrange, 0.2)
+1 pkloc = PeakLoc(corrres)
+1 pklayerind1 = floor(pkloc{0,0}/searchsize)
+1 pklayer1 = GetLayer(corrres, pklayerind1)
+1 pkloc1 = PeakLoc(pklayer1)
+1 pkval1 = Peak(pklayer1)
+1 center1 = centerguess + (pkloc1 - (searchsize-1)/2)
+1 radius1 = radiusguess - (radiusrange/2) + (0.4*pklayerind1)
+1 img0 = AddCircle(img0, center1{0,0}, center1{0,1}, radius1, 255, 1)
+0 ////////////////////////////////////////////////////////////////////
+1 searchsize = 31
+1 centerguess = [385, 480]
+1 radiusguess = 232
+1 radiusrange = 2
+1 corrres = CrossCorrCircle(edges, centerguess{0,0}, centerguess{0,1}, searchsize, searchsize, radiusguess, radiusrange, 0.1)
+1 pkloc = PeakLoc(corrres)
+1 pklayerind2 = floor(pkloc{0,0}/searchsize)
+1 pklayer2 = GetLayer(corrres, pklayerind2)
+1 pkloc2 = PeakLoc(pklayer2)
+1 pkval2 = Peak(pklayer2)
+1 center2 = centerguess + (pkloc2 - (searchsize-1)/2)
+1 radius2 = radiusguess - (radiusrange/2) + (0.2*pklayerind2)
+1 img0 = AddCircle(img0, center2{0,0}, center2{0,1}, radius2, 255, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+2
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+94
+1395
+1352
+2656
+img0
+1
+1
+1
+1.00
+176,810,90,694
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+97
+1237
+2536
+3560
+edges
+1
+1
+1
+1.00
+226,720,140,664
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+2
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1111
+2150
+2119
+2917
+Figure 1
+1
+1
+6.000000
+0.866953
+0.065597
+0.475885
+-0.132751
+[SurfStart]
+pklayer1
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1101
+2131
+2896
+3684
+Figure 2
+1
+1
+9.000000
+0.905296
+-0.022880
+0.412618
+-0.098292
+[SurfStart]
+pklayer2
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+270
+1498
+2802
+3765
+Figure 1
+4
+[TextVarStart]
+center1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+center2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+radius1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+radius2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

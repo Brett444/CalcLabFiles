@@ -1,0 +1,169 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Covisus\CollarSet1B\Collar.0000.8b_2.00G_30.000ms.1.png)
+1 img0 = decimate(img1, 4, 4)
+1 accum = HoughCircular(img0, 0.05)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 hghcenter1 = PeakLoc(accum)
+1 hedges = Conv(img0, sobel_horiz)
+1 vedges = Conv(img0, sobel_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges{0:5, #} = 0
+1 edges{745:749, #} = 0
+1 edges{#, 0:5} = 0
+1 edges{#, 995:999} = 0
+0 edges = MedianFltr(edges, 7, 0)
+0 edges = Conv(edges, unif_5x5)
+1 cannylo = 100
+1 cannyhi = 200
+1 edges2 = CannyEdges(img0, cannylo, cannyhi, 1)
+1 circs = HoughCircularOCV(img0, 0.1, cannylo, cannyhi, 150, 300)
+0 img0 = AddCircle(img0, circs{0,1}, circs{0,0}, circs{0,2}, 255, 1)
+1 img0 = AddCircle(img0, circs{1,1}, circs{1,0}, circs{1,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{2,1}, circs{2,0}, circs{2,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{3,1}, circs{3,0}, circs{3,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{4,1}, circs{4,0}, circs{4,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{5,1}, circs{5,0}, circs{5,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{6,1}, circs{6,0}, circs{6,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{7,1}, circs{7,0}, circs{7,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{55,1}, circs{55,0}, circs{55,2}, 255, 1)
+0 img0 = AddCircle(img0, circs{20,1}, circs{20,0}, circs{20,2}, 255, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+41
+1287
+1321
+2507
+img0
+1
+1
+1
+1.00
+212,786,86,662
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1204
+2225
+1289
+2609
+edges
+1
+1
+1
+1.00
+172,814,140,604
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+937
+2210
+2574
+3789
+edges2
+1
+1
+1
+1.00
+212,800,92,682
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+21
+883
+2531
+3781
+Figure 1
+1
+[TextVarStart]
+circs
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

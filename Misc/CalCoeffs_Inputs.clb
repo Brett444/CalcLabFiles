@@ -1,0 +1,113 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 rawlow = -8
+1 rawhigh = -1360
+1 unitslow = 0
+1 unitshigh = -10
+1 gain = (unitshigh - unitslow) / (rawhigh - rawlow)
+1 offset = unitslow - gain*rawlow
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+122
+345
+1174
+1404
+Figure 1
+2
+[TextVarStart]
+gain
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+offset
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1440
+900
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+1
+[NumCmdEditWndsEnd]
+
+[CmdEditWndStart]
+1
+-1
+-1
+-1
+-1
+399
+690
+752
+1254
+Cmd List 1
+rawlow = -8
+rawhigh = -1360
+unitslow = 0
+unitshigh = -10
+gain = (unitshigh - unitslow) / (rawhigh - rawlow)
+offset = unitslow - gain*rawlow
+[CmdEditWndEnd]
+

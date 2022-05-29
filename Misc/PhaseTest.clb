@@ -1,0 +1,293 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 linelen = 2048
+1 halflen = linelen/2
+1 actpixelshift = 0.2
+1 phasebin = 20
+1 percnoise = 0.0  // 1 is one percent
+0 line1 = newmat(1, linelen, 0)  // use these two lines if you don't have a img to load
+0 line1{0, [halflen-3:halflen+3]} = [0.1, 0.6, 0.85, 1, 0.85, 0.60, 0.1]
+1 img = ReadImage(C:\LensBench\CalcLabFiles\MTF\image.tif) - 0.6
+1 line1 = ExtractLine(img, 493, 929, 0)
+1 line1 = PadToPowerOf2(line1)  // if image is loaded, check if linelen is right
+1 line2 = Shift(line1, actpixelshift, 0, 0, 0)
+0 // ////////////////////////////////////////
+0 // add noise
+0 actnoise = percnoise * MaxVal(line1) / 200
+0 line1 += RandUnif(1, Cols(line1), -actnoise, actnoise)
+0 line2 += RandUnif(1, Cols(line2), -actnoise, actnoise)
+0 // if line was created and not loaded, mimic zero padding
+0 line1{0, [0:20]} = 0
+0 line1{0, [linelen-20:linelen-1]} = 0
+0 line2{0, [0:20]} = 0
+0 line2{0, [linelen-20:linelen-1]} = 0
+0 // ///////////////////////////////////////
+1 phases1 = FFTPhases(line1)
+1 phases2 = FFTPhases(line2)
+1 phases2 = PhaseMatch(phases1, phases2)
+1 phasediff = phases2 - phases1
+1 phasediff = Unwrap(phasediff, -pi, pi)
+1 cyclesperpixel = phasebin/linelen
+1 cycles = phasediff{0,phasebin} / 2 / pi
+1 measpixelshift = cycles/cyclesperpixel
+1 shifterror = measpixelshift - actpixelshift
+1 measpixelshift2 = ShiftMeas(line1, line2)
+1 shifterror2 = measpixelshift2 - actpixelshift
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+3
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+40
+333
+1149
+1887
+Figure 1
+992.418115
+1043.261820
+10.000000
+1000.000000
+-1.000000
+4095.000000
+1000.000000
+0.000000
+1
+1
+0
+0
+2
+[DataSetStart]
+line1
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+line2
+Var2
+0
+1
+0
+0
+255
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+351
+604
+1151
+1890
+Figure 2
+0.000000
+46.207966
+10.000000
+0.000000
+-4.000000
+7.000000
+2.000000
+-4.000000
+1
+1
+0
+0
+2
+[DataSetStart]
+phases1
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+phases2
+Var2
+0
+0
+0
+0
+255
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+608
+900
+1151
+1888
+Figure 3
+0.000000
+1024.000000
+200.000000
+0.000000
+0.000000
+4.000000
+1.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+phasediff
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+259
+800
+890
+1136
+Figure 1
+5
+[TextVarStart]
+actpixelshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+measpixelshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+shifterror
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+measpixelshift2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+shifterror2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

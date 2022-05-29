@@ -1,0 +1,89 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 p1 = [0,0]
+1 p2 = [1,.005]
+1 p3 = [2, .02]
+1 mag13 = ((p3{0,1} - p1{0,1})^2 + (p3{0,0} - p1{0,0})^2)^0.5
+1 p23 = p3-p2
+1 p21 = p1-p2
+1 costheta = dot(p21, p23) / (mag(p21)*mag(p23))
+1 sintheta = (1 - costheta^2)^0.5
+1 radius = mag13 / (2*sintheta)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+75
+212
+1008
+1219
+Figure 1
+1
+[TextVarStart]
+radius
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

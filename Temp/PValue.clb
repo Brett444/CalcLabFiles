@@ -1,0 +1,117 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 numpts = 20
+1 deg = numpts - 2
+1 xs = RandUnif(numpts, 1, -1, 1)
+1 ys = RandUnif(numpts, 1, -1, 1, xs{0,0}*1000)
+1 buf = Abs(CorrCoeffR(xs, ys))
+1 R = buf{0,0}
+1 P = buf{0,1}
+1 T = (R*sqrt(deg)) / (sqrt(1 - R^2))
+1 pvalue = 2 * (1 - StudentTProb(T, deg))
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+652
+1638
+2494
+3071
+Figure 1
+4
+[TextVarStart]
+R
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+T
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+pvalue
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+P
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

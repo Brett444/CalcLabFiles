@@ -1,0 +1,263 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 mtype = 2
+1 maxpnts = 1000
+1 img1 = ReadImage(C:\TempImages\img8.png)
+1 img1 = PadToNewSize(img1, 600, 600, 0, 1)
+1 kpts1 = Keypoints(img1, mtype, maxpnts)
+0 /////////////////////////////
+1 img2 = Rotate(img1, 30, 0, 1)
+1 img2 = Shift(img2, 50, 60, 0)
+1 kpts2 = Keypoints(img2, mtype, maxpnts)
+1 matchmap = KeypointMatch(kpts1, kpts2, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_2 = GetRowsTwoLayers(kpts1, keeprows)
+1 imgmarks = MarkLocations(img1, matches1_2{0:Rows(matches1_2)/2-1, 0:1}, 3, 1, 600)
+0 /////////////////////////////
+1 img3 = Rotate(img1, 60, 0, 1)
+1 img3= Shift(img3, 50, 60, 0)
+1 kpts3 = Keypoints(img3, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_2, kpts3, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_3 = GetRowsTwoLayers(matches1_2, keeprows)
+1 img1_3 = MarkLocations(img1, matches1_3{0:Rows(matches1_3)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_3)
+0 /////////////////////////////
+1 img4 = Rotate(img1, 110, 0, 1)
+1 img4= Shift(img4, 50, 60, 0)
+1 kpts4 = Keypoints(img4, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_3, kpts4, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_4 = GetRowsTwoLayers(matches1_3, keeprows)
+1 img1_4 = MarkLocations(img1, matches1_4{0:Rows(matches1_4)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_4)
+0 /////////////////////////////
+1 img5 = Rotate(img1, 140, 0, 1)
+1 img5= Shift(img5, 50, 60, 0)
+1 kpts5 = Keypoints(img5, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_4, kpts5, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_5 = GetRowsTwoLayers(matches1_4, keeprows)
+1 img1_5 = MarkLocations(img1, matches1_5{0:Rows(matches1_5)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_5)
+0 /////////////////////////////
+1 img6 = Rotate(img1, 170, 0, 1)
+1 img6= Shift(img6, 50, 60, 0)
+1 kpts6 = Keypoints(img6, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_5, kpts6, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_6 = GetRowsTwoLayers(matches1_5, keeprows)
+1 img1_6 = MarkLocations(img1, matches1_6{0:Rows(matches1_6)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_6)
+0 /////////////////////////////
+1 img7 = Rotate(img1, 10, 0, 1)
+1 img7 = Shift(img7, -10, 40, 0)
+1 kpts7 = Keypoints(img7, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_6, kpts7, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_7 = GetRowsTwoLayers(matches1_6, keeprows)
+1 img1_7 = MarkLocations(img1, matches1_7{0:Rows(matches1_7)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_7)
+0 /////////////////////////////
+1 img8 = Rotate(img1, 220, 0, 1)
+1 img8 = Shift(img8, -30, -40, 0)
+1 kpts8 = Keypoints(img8, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_7, kpts8, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_8 = GetRowsTwoLayers(matches1_7, keeprows)
+1 img1_8 = MarkLocations(img1, matches1_8{0:Rows(matches1_8)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_8)
+0 /////////////////////////////
+1 img9 = Rotate(img1, 260, 0, 1)
+1 img9 = Shift(img9, 30, -40, 0)
+1 kpts9 = Keypoints(img9, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_8, kpts9, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_9 = GetRowsTwoLayers(matches1_8, keeprows)
+1 img1_9 = MarkLocations(img1, matches1_9{0:Rows(matches1_9)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_9)
+0 /////////////////////////////
+1 img10 = Rotate(img1, 322, 0, 1)
+1 img10 = Shift(img10, -25, 55, 0)
+1 kpts10 = Keypoints(img10, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_9, kpts10, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_10 = GetRowsTwoLayers(matches1_9, keeprows)
+1 img1_10 = MarkLocations(img1, matches1_10{0:Rows(matches1_10)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_10)
+0 /////////////////////////////
+1 img11 = Rotate(img1, 122, 0, 1)
+1 img11 = Shift(img11, -35, 75, 0)
+1 kpts11 = Keypoints(img11, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_10, kpts11, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_11 = GetRowsTwoLayers(matches1_10, keeprows)
+1 img1_11 = MarkLocations(img1, matches1_11{0:Rows(matches1_11)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_11)
+0 /////////////////////////////
+1 img12 = Rotate(img1, 266, 0, 1)
+1 img12 = Shift(img12, -15, 65, 0)
+1 kpts12 = Keypoints(img12, mtype, maxpnts)
+1 matchmap = KeypointMatch(matches1_11, kpts12, 0.7, 1, Rows(img1), Cols(img1))
+1 keeprows = matchmap{#,0}
+1 matches1_12 = GetRowsTwoLayers(matches1_11, keeprows)
+1 img1_12 = MarkLocations(img1, matches1_12{0:Rows(matches1_12)/2-1, 0:1}, 3, 1, 600)
+1 imgmarks = AddLayer(imgmarks, img1_12)
+[CommandsEnd]
+
+[NumFunctionsStart]
+4
+[NumFunctionsEnd]
+
+[FunctionStart]
+GetRowsTwoLayers(sourcemat, keeprows)
+{
+	keeprows = Clip(keeprows, 0, 1e9);
+	
+	mat1 = GetLayer(sourcemat, 0);
+	mat2 = GetLayer(sourcemat, 1);
+	
+	mat1 = mat1{keeprows, #};
+	mat2 = mat2{keeprows, #};
+	
+	finalmat = mat1;
+	finalmat = AddLayer(finalmat, mat2);
+	
+	return(finalmat);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GetNewMatches(img1, rshift, cshift, rot, oldkpmatches)
+{
+	imgn = Rotate(img1, rot, 0, 1);
+	imgn = Shift(imgn, cshift, rshift, 0);
+	kptsn =  Keypoints(imgn, 1, 1000);
+	map = KeypointMatch(oldkpmatches, kptsn, 0.7, 1, Rows(imgn), Cols(imgn));
+	keeprows = map{#,0};
+	newkpmatches = GetRowsTwoLayers(oldkpmatches, keeprows);
+	
+	return(newdpmatches);
+}
+[FunctionEnd]
+
+[FunctionStart]
+MakeNewMarkedImage(img1, newkpmatches)
+{
+	lastrow = RowsPerLayer(newkpmatches)-1;
+	newimg = MarkLocations(img1, newkpmatches{0:lastrow, 0,1}, 3, 1, 600);
+	
+	return(newimg);
+}
+[FunctionEnd]
+
+[FunctionStart]
+GenMarkedImages(img1, kpts1)
+{
+	oldmatches = kpts1;
+	vid = img1;
+	for(i=0; i<20; i+=1)
+	{
+		newmatches = GetNewMatches(img1, i*5, i*5, i*15, oldmatches);
+		imgn = MakeNewMarkedImg(img1, newmatches);
+		vid = AddLayer(vid, imgn);
+		oldmatches = newmatches;
+	}
+	
+	return(vid);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+1
+[NumVideoWndsEnd]
+
+[VideoWndStart]
+1
+-1
+-1
+-1
+-1
+759
+2201
+2062
+3715
+imgmarks
+1
+1
+1.00
+0,599,0,599
+[VideoWndEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+135
+774
+2437
+3624
+Figure 1
+1
+[TextVarStart]
+matchmap
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

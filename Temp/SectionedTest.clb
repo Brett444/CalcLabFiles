@@ -1,0 +1,160 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 signal = 0:63
+1 signal *= 0
+1 signal{0,0} = 1
+1 incoeffs1 = [0.028,  0.053, 0.071,  0.053, 0.028]
+1 outcoeffs1 = [-2.026, 2.148, -1.159, 0.279]
+0 incoeffs1 = [0.028,  0.053, 0.071]
+0 outcoeffs1 = [-2.026, 2.148]
+1 gain1 = 1
+1 output1 = FilterIIR(incoeffs1, outcoeffs1, gain1, signal)
+1 incoeffs2 = [1.0, 1.5464, 1.0, 1.0, 0.3464, 1.0]
+1 outcoeffs2 = [-1.0646, 0.3696, -0.9614, 0.7549]
+0 incoeffs2 = [0.028,  0.053, 0.071, 1.0, 0, 0]
+0 outcoeffs2 = [-2.026, 2.148, 0, 0]
+0 incoeffs2 = [0.028,  0.053, 0.071]
+0 outcoeffs2 = [-2.026, 2.148]
+1 gain2 = 0.028
+0 gain2 = 1
+1 output2 = FilterIIRSectioned(incoeffs2, outcoeffs2, gain2, signal)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+161
+913
+1627
+3641
+Output1 (non sectioned)
+0.000000
+63.000000
+20.000000
+0.000000
+-0.119539
+0.322148
+0.100000
+-0.100000
+1
+1
+0
+0
+1
+[DataSetStart]
+output1
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+913
+1663
+1626
+3641
+Output2 (sectioned)
+0.000000
+63.000000
+20.000000
+0.000000
+-0.119557
+0.322140
+0.100000
+-0.100000
+1
+1
+0
+0
+1
+[DataSetStart]
+output2
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

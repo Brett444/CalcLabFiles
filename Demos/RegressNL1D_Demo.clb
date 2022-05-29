@@ -1,0 +1,149 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrate a non-linear regression.  This means that the function which the data is being fit to is NOT a linear combination of functions.  In this case, the data is being fit to y = e^(c1+ c2*x + c3*x^2).  The user defined function RegressFunc is passed to RegressNL1D and used to calculate the coefficients.  The coefficients are used to generate the best fit function which is plotted against the data below.
+[NotesEnd]
+
+[CommandsStart]
+1 c1 = 5
+1 c2 = .1
+1 c3 = 2
+1 guess = [1,1,1]
+1 NoiseLevel = 100
+1 xvals = 0:0.1:1
+1 yvals = e^(c1 + c2*xvals + c3*xvals^2)  // These two lines generate the data
+1 yvals += randunif(1, cols(yvals), -NoiseLevel, NoiseLevel)
+1 coeffs = RegressNL1D(xvals, yvals, guess, RegressFunc)
+1 rvals = e^(coeffs{0,0} + coeffs{0,1}*xvals + coeffs{0,2}*xvals^2)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+RegressFunc(invec)
+{
+	outvec = newmat(1, size(invec), 0);
+	
+	x = invec{0,0};
+	c1 = invec{0,1}; c2 = invec{0,2}; c3 = invec{0,3};
+	
+	outvec{0,0} = e^(c1 + c2*x + c3*x^2);
+	
+	outvec{0,1} = e^(c1 + c2*x + c3*x^2);
+	outvec{0,2} = x * e^(c1 + c2*x + c3*x^2);
+	outvec{0,3} = x * x * e^(c1 + c2*x + c3*x^2);
+	
+	return(outvec);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+353
+756
+441
+826
+Regression Fit
+0.000000
+1.000000
+0.200000
+0.000000
+-40.000000
+1389.000000
+500.000000
+0.000000
+2
+[DataSetStart]
+yvals
+xvals
+5
+1
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+rvals
+xvals
+0
+0
+0
+0
+255
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+130
+350
+442
+1189
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+353
+757
+828
+1269
+RegressFunc
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,234 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+0 imgorig = ReadImage(C:\Users\Brett\Downloads\screw.0000.8b_1.00G_30.000ms.0_0.050D_ (3).png)
+1 imgorig = ReadImage(C:\Users\Brett\Downloads\screw.0000.8b_1.00G_30.000ms.0_0.050D_ (4).png)
+0 imgorig = Rebin(imgorig, 4, 4)
+1 imgorig = BlurGauss(imgorig, 10)
+1 imgcanny = CannyEdges(imgorig, 120, 60)
+1 edgesvert = Conv(imgorig, sobel_vert)
+1 edgeshoriz = Conv(imgorig, sobel_horiz)
+1 edges = sqrt(edgeshoriz^2 + edgesvert^2)
+1 structelem = newmat(3,3,1)
+1 dmy = Threshold(edges, 0, 255, 30)
+0 edges = Erode(edges, structelem)
+1 conts_canny = Contours(imgcanny)
+1 drawn_c = DrawContours(conts_canny, 3000, 4000, 0)
+0 conts_edges = Contours(edges)
+0 drawn_e = DrawContours(conts_edges, 3000, 4000, 0)
+1 lens = ContourLengths(conts_canny)
+1 areas = ContourAreas(conts_canny)
+1 onecont = conts_canny{#, 928:929}
+1 drawone = DrawContours(onecont, 3000, 4000, 0)
+1 drawone = drawone/255
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+1222
+2231
+2586
+3686
+Figure 1
+0.000000
+1520.000000
+500.000000
+0.000000
+1026.000000
+4436.000000
+1000.000000
+2000.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+lens
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+5
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+292
+1179
+2610
+3672
+imgorig
+1
+1
+-2
+1.00
+0,3999,0,2999
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+282
+1161
+1470
+2523
+imgcanny
+1
+1
+-2
+0.21
+0,3999,0,2999
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1309
+2197
+2639
+3722
+edges
+1
+1
+-2
+1.00
+0,3999,0,2999
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1201
+2148
+1467
+2603
+drawn_c
+1
+1
+-2
+0.33
+0,3999,0,2999
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+596
+1521
+2287
+3351
+drawone
+1
+1
+-1
+0.43
+1264,3320,643,2309
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+177
+1692
+2576
+3693
+Figure 1
+1
+[TextVarStart]
+onecont
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

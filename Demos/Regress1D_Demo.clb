@@ -1,0 +1,146 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates the Regress1D function.
+
+Performs a regression on data with some randomness added.  The user defined function RegressFunc defines what terms  will be used for the regression.  Once the coefficients are  generated, the function is generated and graphed along  with the original data.
+[NotesEnd]
+
+[CommandsStart]
+1 a = 0.165
+1 b = 4.05
+1 c = 2.8
+1 d = 5
+1 xvals = 0:0.2:10
+1 yvals = a*xvals^3 + b*xvals^2 + c*xvals + d
+1 yvals += randunif(1, size(yvals), -100, 100)  // Add some randomness to make the fit interesting
+1 coeffs = Regress1D(xvals, yvals, 4, RegressFunc)
+1 rvals = coeffs{0,0} + coeffs{0,1}*xvals + coeffs{0,2}*xvals^2 + coeffs{0,3}*xvals^3  // Generate from 'coeffs' the function which is the best fit
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+RegressFunc(x)
+{
+	vals = newmat(1,4);
+	
+	vals{0,0} = 1;
+	vals{0,1} = x;
+	vals{0,2} = x*x;
+	vals{0,3} = x*x*x;
+	
+	return(vals);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+412
+752
+483
+967
+Regression Fit
+0.000000
+10.000000
+2.000000
+0.000000
+-101.000000
+682.000000
+200.000000
+0.000000
+2
+[DataSetStart]
+yvals
+xvals
+5
+1
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+rvals
+xvals
+0
+0
+0
+0
+255
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+180
+399
+483
+1100
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+412
+751
+978
+1248
+RegressFunc
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

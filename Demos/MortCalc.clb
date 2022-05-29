@@ -1,0 +1,217 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 homevalue = 500000
+1 loanamt = homevalue - 200000
+1 mortgagerate = 3
+1 numyears = 9
+1 proptaxperc = 1.25
+1 mortgage = LoanPayment(loanamt, mortgagerate, 12, numyears)
+1 mortgagepayments = newmat(1, 12*numyears, mortgage)
+1 interestpayments = IntPayments(loanamt, mortgagerate, 12, numyears)
+1 principlepayments = interestpayments - mortgage
+1 principlepayments *= -1
+1 totalinterestpaid = sum(interestpayments)
+1 years = 0:1/12:12*numyears-1
+1 proptaxpayment = homevalue * proptaxperc*0.01 / 12
+1 totpayment = mortgage + proptaxpayment
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-3
+-3
+-1
+-1
+159
+1329
+1513
+3232
+Interest Amount of Mortgage
+0.000000
+9.000000
+2.000000
+0.000000
+-69.063319
+3779.049127
+1000.000000
+0.000000
+0
+0
+0
+0
+3
+[DataSetStart]
+mortgagepayments
+years
+0
+0
+0
+0
+0
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+interestpayments
+years
+0
+0
+255
+0
+0
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+principlepayments
+years
+0
+0
+0
+0
+255
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-3
+-3
+-1
+-1
+1203
+2274
+3171
+3810
+Figure 1
+4
+[TextVarStart]
+mortgage
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+totalinterestpaid
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+proptaxpayment
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+totpayment
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+1
+[NumCmdEditWndsEnd]
+
+[CmdEditWndStart]
+1
+-1
+-1
+-1
+-1
+248
+1133
+89
+1463
+Figure 1
+homevalue = 500000
+loanamt = homevalue - 200000
+mortgagerate = 3
+numyears = 9
+proptaxperc = 1.25
+mortgage = LoanPayment(loanamt, mortgagerate, 12, numyears)
+mortgagepayments = newmat(1, 12*numyears, mortgage)
+interestpayments = IntPayments(loanamt, mortgagerate, 12, numyears)
+principlepayments = interestpayments - mortgage
+principlepayments *= -1
+totalinterestpaid = sum(interestpayments)
+years = 0:1/12:12*numyears-1
+proptaxpayment = homevalue * proptaxperc*0.01 / 12
+totpayment = mortgage + proptaxpayment
+[CmdEditWndEnd]
+

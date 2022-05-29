@@ -1,0 +1,117 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates a polynomial regression using RegressPoly.  After the data is generated and the coefficients are calculated and put in the variable 'rc'.  A polynomial is generated using the coefficients and it's plotted against the data to verify the fit.
+[NotesEnd]
+
+[CommandsStart]
+1 var = 1000
+1 a = .01
+1 b = .05
+1 c = 5
+1 d = 25
+1 xvals = [0:99]
+1 yvals = a*xvals^3 + b*xvals^2 + c*xvals + d + randunif(1, 100, -var, var)  // The data is generated here
+1 rc = RegressPoly(xvals, yvals, 3)
+1 polyfit = rc{0,0} + rc{0,1}*xvals + rc{0,2}*xvals^2 + rc{0,3}*xvals^3
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+233
+571
+630
+1268
+Verify The Fit
+0.000000
+99.000000
+20.000000
+0.000000
+-1045.000000
+11783.000000
+2000.000000
+0.000000
+2
+[DataSetStart]
+yvals
+xvals
+5
+1
+255
+0
+0
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+polyfit
+xvals
+0
+0
+0
+0
+255
+0
+-0.000000
+-0.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+46
+220
+639
+1267
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

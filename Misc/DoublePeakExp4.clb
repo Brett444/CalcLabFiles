@@ -1,0 +1,249 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 desiredbin = 50
+1 lineloc = 512
+1 pairwidth = 512 / desiredbin * 2
+1 be = newmat(1024, 1024, 0)
+1 be = BullseyeGen(be, pairwidth*0.5, pairwidth*0.5, 10)
+1 idealline_1d = be{lineloc,#}
+1 impresp = newmat(1024, 1024, 0)
+1 impresp{482:542, 506:520} = 5
+1 impresp_1d = impresp{lineloc,#}
+1 beimg = be
+1 beimg = Conv_FFT(be, impresp)
+1 beimg = FFTShift(beimg)
+0 beimg += RandUnif(1024, 1024, -5, 5)
+1 line = beimg{lineloc,#}
+0 line = GetCentralPowerOf2(line)
+1 line2 = Apodize(line, 1024/8, 0)
+1 line2 = PadToNewSize(line2, 1, 65536)
+1 spec = FFTMags(line2)
+1 bin49 = [10877.7, 10113.10, 9.03446e3, 7.685254e3, 6.104719e3, 4.391261e3, 2.58808e3, 751.98687, 1.026792e3, 2.66087e3, 4.104361e3, 5.306715e3, 6.274836e3, 6.895269e3, 7.248721e3, 7.300980e3, 7.130165e3, 6.675962e3, 6.079333e3, 5.339311e3, 4.517939e3]
+1 bin50 = [2588.48, 4054.641, 5.53164e3, 6.941433e3, 8.2596e3, 9.3868e3, 10.289414e3, 10.876469e3, 11.13779e3, 11.081583e3, 10.660726e3, 9.909197e3, 8.817936e3, 7.487744e3, 5.933779e3, 4.231965e3, 2.423672e3, 645.33179, 1.086064e3, 2.703429e3, 4.109363e3]
+1 bin51 = [1994.9, 2400.89, 2.687542e3, 2.791252e3, 2.691257e3, 2.365922e3, 1.797219e3, 979.265581, 20.987765, 1.243214e3, 2.585749e3, 4.003327e3, 5.46042e3, 6.831958e3, 8.112026e3, 9.228448e3, 10.076210e3, 10.680962e3, 10.949001e3, 10.865502e3, 10.451104e3]
+1 xvals = 49:0.1:51
+1 beimg{lineloc,#} = maxval(beimg)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+220
+800
+2254
+3338
+Figure 1
+3195.594452
+3217.107696
+5.000000
+3200.000000
+107.545726
+112.008474
+1.000000
+108.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+spec
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+60
+383
+1951
+2880
+Figure 2
+0.000000
+1028.947368
+200.000000
+0.000000
+-7131.181818
+54663.727273
+20000.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+line2
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+124
+698
+634
+1264
+beimg
+1
+1
+0
+1.00
+186,794,234,756
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+126
+705
+1248
+1878
+be
+1
+1
+0
+1.00
+208,816,248,776
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+689
+1003
+1161
+1462
+impresp
+1
+1
+0
+1.00
+373,651,381,643
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+732
+974
+1479
+1893
+Figure 1
+2
+[TextVarStart]
+desiredbin
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+pairwidth
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

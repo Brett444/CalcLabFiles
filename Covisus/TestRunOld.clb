@@ -1,0 +1,199 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 template1 = newmat(525, 525, 0)
+1 template1 = AddDisk(template1, 262, 262, 262, 140)
+1 img0 = ReadImage(C:\Covisus\OrigImages\Autoliv.0000_cam20125407_g0.0_ex9.998.png)
+1 img0 = Decimate(img0, 4, 4)
+1 crow = 382
+1 ccol = 510
+1 img1 = img0{crow-360:crow+360, ccol-360:ccol+360}
+1 crow = 350
+1 ccol = 344
+0 accum = HoughCircular(img1, 0.03)
+0 rotimg = Rotate(img1, -79, 0)
+0 kernel = rotimg{112:179, 320:409}
+1 kernel = ReadImage(C:\Covisus\kernel2.jpg)
+1 Timer_Start(1)
+1 corr = RotCrossCorr(img1, kernel, 170, 250, 0, 360, crow, ccol)
+1 patch = newmat(30, 30, 1)
+1 corr = CrossCorr(corr, patch)
+1 algtime = Timer_Elapsed(1)
+1 corr = Suppress(corr, -1e9, 0, 1)
+1 maxcorr = MaxVal(corr)
+1 img1{crow-2:crow+2, ccol-2:ccol+2} = 255
+1 maxcorrind = MaxValInd(corr)
+1 rowresult1 = maxcorrind{0,0}
+1 colresult1 = maxcorrind{0,1}
+1 anglevec = [colresult1 - ccol, crow - rowresult1]
+1 angle = aTan2(anglevec{0,1}, anglevec{0,0})
+1 angle *= 180/pi
+1 rowresult2 = crow + anglevec{0,1}
+1 colresult2 = ccol - anglevec{0,0}
+1 subcorr = corr{rowresult2-40:rowresult2+40, colresult2-40:colresult2+40}
+1 maxcorr2 = MaxVal(subcorr)
+1 signalstrength = maxcorr / maxcorr2
+1 img1 = AddLine(img1, crow, ccol, angle, 255)
+1 img1 = AddLine(img1, crow, ccol, angle+90, 255)
+1 img1{rowresult1-3:rowresult1+3, colresult1-3:colresult1+3} = 0
+1 img1{rowresult2-3:rowresult2+3, colresult2-3:colresult2+3} = 0
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+1
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+175
+1104
+1396
+2410
+img1
+1
+1
+0
+1.00
+0,720,0,720
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+1
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+128
+1164
+2415
+3542
+Figure 1
+1
+1
+1404.000000
+-0.923025
+0.094412
+-0.248399
+0.278224
+[SurfStart]
+corr
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1209
+2200
+3169
+3759
+Figure 1
+4
+[TextVarStart]
+maxcorr
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+algtime
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+angle
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+signalstrength
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

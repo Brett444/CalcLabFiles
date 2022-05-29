@@ -1,0 +1,194 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates an Fourier Transform.
+
+First generate a time signal that consists of 5 cosine waves.  Then take the FFT of the signal and plot the magnitudes and phases versus the FFT frequencies.
+[NotesEnd]
+
+[CommandsStart]
+1 time = 0:511
+1 samplerate = 1
+1 nyquist = samplerate/2  // nyquist frequency is half the sample rate
+1 amps = 1:5  // Time signal will consist of 5 cosine wave with amplitudes 1,2,3,4 and 5
+1 freqs = [0.2, 0.4, 0.5, 0.60, 0.8] * nyquist  // cosine wave frequencies will be spread out across the spectrum below nyquist
+1 phases = [1:5]*0.0
+1 signal = GenSig(time, samplerate, amps, freqs, phases)
+1 mags = FFTMags(signal)
+1 phs = FFTPhases(signal)
+1 fftfreqs = FFTFreqs(512, 1)  // graph mags and phs against fftfreqs
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+GenSig(time, samplerate, amp, freqs, phases)
+{
+	tlen = Size(time);
+	alen = Size(amp);
+	nyquist = samplerate/2;
+	
+	sig = time*0;  // create the sig vector with approp size and set to 0
+	
+	for(i=0; i<alen; i+=1)
+		sig += amp{0,i}*cos(2*pi*freqs{0,i}*time + phases{0,i});
+	
+	return(sig);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+3
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+266
+501
+799
+1254
+Spectrum of Signal (mags vs fftfreqs)
+0.000000
+0.500000
+0.200000
+0.000000
+-1.000000
+6.000000
+2.000000
+0.000000
+1
+[DataSetStart]
+mags
+fftfreqs
+0
+0
+255
+0
+0
+0
+2237268949487537100000.000000
+2237268949487537400000.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+35
+264
+799
+1254
+Time Signal
+0.000000
+30.000000
+10.000000
+0.000000
+-15.000000
+15.000000
+10.000000
+-10.000000
+1
+[DataSetStart]
+signal
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+504
+763
+799
+1254
+FFT Phases (phs vs fftfreqs)
+0.000000
+0.500000
+0.200000
+0.000000
+-4.000000
+4.000000
+2.000000
+-4.000000
+1
+[DataSetStart]
+phs
+fftfreqs
+0
+0
+255
+0
+0
+0
+2237268949487537100000.000000
+2237268949487537400000.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+39
+206
+231
+798
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,223 @@
+[Format=2.0]
+
+[NotesStart]
+1 - 360, 354
+2 - 360, 344
+3 - 360, 344
+4 - 374, 350
+5 - 350, 344
+6 - 355, 348
+7 - 362, 340
+8 - 350, 352
+9 - 347, 351
+
+avg, 357,  348
+
+[NotesEnd]
+
+[CommandsStart]
+1 template1 = newmat(525, 525, 0)
+1 template1 = AddDisk(template1, 262, 262, 262, 140)
+1 img0 = ReadImage(C:\Covisus\CollarSet1\Autoliv.0000_cam18159278_g3.01_ex30.004.png)
+0 img0 = ReadImage(C:\Covisus\OrigImages\Autoliv.0000_cam20125407_g0.0_ex9.998.png)
+1 img0 = Decimate(img0, 4, 4)
+1 crow = 382
+1 ccol = 510
+1 img1 = img0{crow-360:crow+360, ccol-360:ccol+360}
+1 crow = 350
+1 ccol = 350
+1 kernel = ReadImage(C:\Covisus\kernel2B.jpg)
+1 Timer_Start(1)
+1 corr = RotCrossCorr(img1, kernel, 70, 220, 0, 360, crow, ccol)
+1 patch = newmat(30, 30, 1)
+1 corr = CrossCorr(corr, patch)
+1 algtime = Timer_Elapsed(1)
+1 corr = Suppress(corr, -1e9, 0, 1)
+1 maxcorr = MaxVal(corr)
+1 maxcorrind = MaxValInd(corr)
+1 rowresult1 = maxcorrind{0,0}
+1 colresult1 = maxcorrind{0,1}
+1 anglevec0 = [colresult1 - ccol, crow - rowresult1]
+1 r2 = rowresult1 + 2*anglevec0{0,1}
+1 c2 = colresult1 - 2*anglevec0{0,0}
+1 subcorr = corr{r2-50:r2+50, c2-50:c2+50}
+1 maxcorr2 = MaxVal(subcorr)
+1 maxcorrind = MaxValInd(subcorr)
+1 maxcorrind -= 50
+1 maxcorrind += [r2, c2]
+1 rowresult2 = maxcorrind{0,0}
+1 colresult2 = maxcorrind{0,1}
+1 anglevec = [colresult1 - colresult2, rowresult2 - rowresult1]
+1 angle = aTan2(anglevec{0,1}, anglevec{0,0})
+1 angle *= 180/pi
+1 signalstrength = maxcorr / maxcorr2
+1 img1 = AddLine(img1, rowresult1, colresult1, angle, 255)
+1 img1{rowresult1-3:rowresult1+3, colresult1-3:colresult1+3} = 0
+1 img1{rowresult2-3:rowresult2+3, colresult2-3:colresult2+3} = 0
+1 img1{crow-2:crow+2, ccol-2:ccol+2} = 255
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+2
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1166
+1886
+2944
+3793
+kernel
+1
+1
+3
+1.00
+0,60,0,60
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+285
+1595
+1189
+2473
+img1
+1
+1
+1
+1.00
+48,672,56,664
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+1
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+138
+1177
+2662
+3792
+Figure 1
+1
+1
+1188.000000
+-0.917265
+0.003657
+-0.397821
+-0.018700
+[SurfStart]
+corr
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+139
+980
+2093
+2683
+Figure 1
+3
+[TextVarStart]
+algtime
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+angle
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+signalstrength
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

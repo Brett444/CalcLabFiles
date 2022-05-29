@@ -1,0 +1,155 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 Fs = 10000
+1 dt = 1 / Fs
+1 t = 0:dt:dt*1024-dt
+1 sig = sin(2*pi*Fs*0.05*t)
+1 sigmags = FFTMags(sig)
+1 sigphases = FFTPhases(sig)
+1 sig2 = InvFFT(sigmags, sigphases)
+1 diff = sig - sig2
+1 mags = RandUnif(1, 513, 0, 0.1)
+1 mags{0, 50:512} = 0
+1 phases = RandUnif(1, 513, -pi, pi)
+1 noise = InvFFT(mags, phases)
+1 noisysig = sig + noise
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+604
+990
+795
+1880
+Figure 2
+0.000000
+200.294441
+50.000000
+0.000000
+-2.145129
+2.164827
+1.000000
+-2.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+noisysig
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+320
+609
+796
+1881
+Figure 3
+-0.774917
+199.609756
+50.000000
+0.000000
+-0.747750
+1.065093
+0.500000
+-0.500000
+1
+1
+0
+0
+1
+[DataSetStart]
+noise
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

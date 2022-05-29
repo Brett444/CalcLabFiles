@@ -1,0 +1,179 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Users\Brett\Downloads\P03033-658nm.(785 focused).png)
+1 img2 = ReadImage(C:\Users\Brett\Downloads\P003033-658nm.focused.png)
+1 img3 = ReadImage(C:\Users\Brett\Downloads\P003033-785nm.(658 focused).png)
+1 img4 = ReadImage(C:\Users\Brett\Downloads\P003033-785nm.focused.png)
+1 img5 = ReadImage(C:\Users\Brett\Downloads\785nm.Power=80.2mW.png)
+1 img1 = PadToPowerOf2(img1)
+1 img2 = PadToPowerOf2(img2)
+1 img3 = PadToPowerOf2(img3)
+1 img4 = PadToPowerOf2(img4)
+1 img5 = PadToPowerOf2(img5)
+1 fftmags1 = FFTMags(img1)
+1 fftmags2 = FFTMags(img2)
+1 fftmags3 = FFTMags(img3)
+1 fftmags4 = FFTMags(img4)
+1 fftmags5 = FFTMags(img5)
+1 sm = 10
+1 fftmags1{1024-sm:1024+sm, 1024-sm:1024+sm} = 0
+1 fftmags2{1024-sm:1024+sm, 1024-sm:1024+sm} = 0
+1 fftmags3{1024-sm:1024+sm, 1024-sm:1024+sm} = 0
+1 fftmags4{1024-sm:1024+sm, 1024-sm:1024+sm} = 0
+1 fftmags5{1024-sm:1024+sm, 1024-sm:1024+sm} = 0
+1 fftmags1b = Rebin(fftmags1, 4, 4)
+1 fftmags2b = Rebin(fftmags2, 4, 4)
+1 fftmags3b = Rebin(fftmags3, 4, 4)
+1 fftmags4b = Rebin(fftmags4, 4, 4)
+1 fftmags5b = Rebin(fftmags5, 4, 4)
+0 fftmags1 = Suppress(fftmags1, 0.03, 0, 0)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+5
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+165
+839
+1441
+2274
+img1
+1
+1
+0
+0.64
+512,1308,362,944
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+161
+831
+2265
+3044
+img2
+1
+1
+-1
+0.39
+0,1486,10,1166
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+158
+826
+3021
+3810
+img3
+1
+1
+-1
+1.00
+258,1764,8,1160
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+836
+1622
+1445
+2273
+img4
+1
+1
+-1
+0.77
+192,1776,0,1388
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+821
+1613
+2266
+3046
+img5
+1
+1
+-1
+1.00
+0,1488,0,1400
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

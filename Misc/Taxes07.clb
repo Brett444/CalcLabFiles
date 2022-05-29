@@ -1,0 +1,63 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 al = [2700, 6975, 8925, 7050, 3300, 1950, 4500]'
+1 eps = [4125, 5750, 4750, 7125, 4625, 4500, 8500, 14000, 12960]'
+1 totalsalary = sum(al) + sum(eps)
+1 fedpaid = 5.7e3 + 6e3 + 9e3 + 10e3
+1 statepaid = 1.3e3 + 2e3 + 3e3 + 3e3
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

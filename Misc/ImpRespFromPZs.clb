@@ -1,0 +1,123 @@
+[Format=1.1]
+
+[NotesStart]
+Lowpass filter from poles and zeros.  Zero at 0,0 is added to cancel out the pole at 0,0 since the low pass doesn't have any poles.
+[NotesEnd]
+
+[CommandsStart]
+1 poles = [0,0]  // these first two lines cancel each other out
+1 zeros = [0,0]
+0 zeros = Append(0, zeros, [-.03,.7])
+1 poles = Append(0, poles, [-.01,.2])
+1 times = 0:0.2:100
+1 response = ImpRespFromPZs(poles, zeros, times)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+261
+734
+623
+1366
+Figure 1
+0.000000
+500.000000
+100.000000
+0.000000
+-0.992115
+1.000000
+0.500000
+-0.500000
+1
+1
+0
+0
+1
+[DataSetStart]
+response
+Var1
+0
+1
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1440
+900
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+1
+[NumCmdEditWndsEnd]
+
+[CmdEditWndStart]
+1
+-1
+-1
+-1
+-1
+474
+720
+21
+593
+Cmd List 1
+poles = [0,0]  // these first two lines cancel each other out
+zeros = [0,0]
+//zeros = Append(0, zeros, [-.03,.7])
+poles = Append(0, poles, [-.01,.2])
+times = 0:0.2:100
+response = ImpRespFromPZs(poles, zeros, times)
+[CmdEditWndEnd]
+

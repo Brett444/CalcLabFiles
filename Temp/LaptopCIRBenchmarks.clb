@@ -1,0 +1,142 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 threads = 1:16
+1 speed = [1.2, .617, .437, .368, .323, .306, .290, .273, .261, .261, .268, .275, .285, .3, .3, .3]
+0 speed = speed{0, 0:7}
+0 threads = threads{0, 0:7}
+1 speed /= speed{0,0}
+1 factor = 1 / speed
+1 para_perc = 0.90
+1 theory90 = (1-para_perc) + para_perc/threads
+1 factor90 = 1/theory90
+1 para_perc = 0.95
+1 theory95 = (1-para_perc) + para_perc/threads
+1 factor95 = 1/theory95
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+246
+1427
+1840
+3587
+Execution-Time Vs Num-Of-Threads
+1.000000
+16.000000
+5.000000
+5.000000
+0.109375
+1.000000
+0.200000
+0.200000
+1
+1
+0
+0
+3
+[DataSetStart]
+speed
+threads
+0
+1
+255
+0
+0
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+theory90
+threads
+0
+1
+0
+0
+255
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+theory95
+threads
+0
+1
+0
+128
+64
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,216 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Covisus\CollarSet1B\Collar.0000.8b_2.00G_30.000ms.1.png)
+1 img0 = decimate(img1, 4, 4)
+1 kernel = ReadImage(C:\Covisus\Kernel4.jpg)
+1 dmy = Grayscale(kernel, 0)
+1 kernel = Suppress(kernel, 0, 10, 1)
+1 Timer_Start(1)
+1 accum = HoughCircular(img0, 0.1)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 accum = Conv(accum, gauss_5x5)
+1 center = MaxValInd(accum)
+1 hedges = Conv(img0, edge_horiz)
+1 vedges = Conv(img0, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 dmy = Threshold(edges, 10, 255, 80)
+1 corr = RotCrossCorr(edges, kernel, 135, 175, 0, 360, center{0,0}, center{0,1})
+1 corr = Suppress(corr, -1e9, 0, 1)
+1 signal = MaxVal(corr)
+1 corrloc1 = MaxValInd(corr)
+1 anglevec = [corrloc1{0,1} - center{0,1}, center{0,0} - corrloc1{0,0}]
+0 //
+1 r2 = corrloc1{0,0} + 2*anglevec{0,1}
+1 c2 = corrloc1{0,1} - 2*anglevec{0,0}
+1 subcorr = corr{r2-50:r2+50, c2-50:c2+50}
+1 corrloc2 = MaxValInd(subcorr)
+1 corrloc2 -= 50
+1 corrloc2 += [r2, c2]
+1 anglevec = [corrloc1{0,1} - corrloc2{0,1}, corrloc2{0,0} - corrloc1{0,0}]
+1 center = [(corrloc1{0,0} + corrloc2{0,0})/2, (corrloc1{0,1} + corrloc2{0,1})/2]
+0 //
+1 corrbuf = corr
+1 corrbuf{corrloc1{0,0}-20:corrloc1{0,0}+20, corrloc1{0,1}-20:corrloc1{0,1}+20} = 0
+1 corrbuf{corrloc2{0,0}-20:corrloc2{0,0}+20, corrloc2{0,1}-20:corrloc2{0,1}+20} = 0
+1 sig2 = MaxVal(corrbuf)
+1 signalstrength = signal / sig2
+0 //
+1 angle = aTan2(anglevec{0,1}, anglevec{0,0})
+1 angle *= 180/pi
+1 angle = if(angle>0, angle-90, angle+90)
+1 algtime = Timer_Elapsed(1)
+1 img0{corrloc1{0,0}-3:corrloc1{0,0}+3, corrloc1{0,1}-3:corrloc1{0,1}+3} = 0
+1 img0{corrloc2{0,0}-3:corrloc2{0,0}+3, corrloc2{0,1}-3:corrloc2{0,1}+3} = 0
+1 img0 = AddLine(img0, center{0,0}, center{0,1}, angle, 255)
+1 img0{center{0,0}-5:center{0,0}+5, center{0,1}-5:center{0,1}+5} = 255
+0 img0 = AddLine(img0, center{0,0}, center{0,1}, angle-90, 255)
+0 img0 = AddCircle(img0, center{0,0}, center{0,1}, 155, 255, 40)
+1 CenterRowCol = center*4
+0 img1{CenterRowCol{0,0}-5:CenterRowCol{0,0}+5, CenterRowCol{0,1}-5:CenterRowCol{0,1}+5} = 255
+1 rowshift = Rows(img1)/2 - CenterRowCol{0,0}
+1 colshift = Cols(img1)/2 - CenterRowCol{0,1}
+0 imgC = Shift(img1, colshift, rowshift, 0, 0)
+0 imgC = Rotate(imgC, -angle, 0)
+0 imgC{Rows(imgC)/2, #} = 255
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+3
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+95
+1273
+1525
+2701
+img0
+1
+1
+1
+1.00
+229,799,108,650
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1259
+2170
+1644
+2720
+edges
+1
+1
+1
+1.00
+238,758,176,584
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1258
+2236
+2707
+3609
+kernel
+1
+1
+4
+1.00
+0,50,0,50
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+172
+1199
+2717
+3563
+Figure 1
+4
+[TextVarStart]
+angle
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+algtime
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+signalstrength
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+CenterRowCol
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

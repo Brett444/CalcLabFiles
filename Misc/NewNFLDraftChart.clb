@@ -1,0 +1,156 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 nflvals = Read(C:\Downloads\nfldraftvals.txt)'
+1 picknum = [1:224]
+1 nhlbasedvals = 3000*(17/(16+picknum))
+1 scalerbase = [0:223]
+1 scaler = (-0.95/224)*scalerbase + 1
+1 nhlbasedvals *= scaler
+1 nhlbasedchart = newmat(32, 7, 0)
+1 nhlbasedchart{#, 0} = nhlbasedvals{0, 0:31}'
+1 nhlbasedchart{#, 1} = nhlbasedvals{0, 32:32+31}'
+1 nhlbasedchart{#, 2} = nhlbasedvals{0, 64:64+31}'
+1 nhlbasedchart{#, 3} = nhlbasedvals{0, 3*32:3*32+31}'
+1 nhlbasedchart{#, 4} = nhlbasedvals{0, 4*32:4*32+31}'
+1 nhlbasedchart{#, 5} = nhlbasedvals{0, 5*32:5*32+31}'
+1 nhlbasedchart{#, 6} = nhlbasedvals{0, 6*32:6*32+31}'
+1 nflchart = newmat(32, 7, 0)
+1 nflchart{#, 0} = nflvals{0, 0:31}'
+1 nflchart{#, 1} = nflvals{0, 32:32+31}'
+1 nflchart{#, 2} = nflvals{0, 64:64+31}'
+1 nflchart{#, 3} = nflvals{0, 3*32:3*32+31}'
+1 nflchart{#, 4} = nflvals{0, 4*32:4*32+31}'
+1 nflchart{#, 5} = nflvals{0, 5*32:5*32+31}'
+1 nflchart{#, 6} = nflvals{0, 6*32:6*32+31}'
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+64
+644
+478
+1445
+Figure 1
+0.000000
+223.000000
+50.000000
+0.000000
+2.000000
+3000.000000
+500.000000
+500.000000
+1
+1
+0
+0
+2
+[DataSetStart]
+nflvals
+Var1
+0
+0
+0
+0
+255
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+nhlbasedvals
+Var2
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+49
+839
+575
+1384
+Figure 1
+1
+[TextVarStart]
+nhlbasedchart
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+3
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1440
+900
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

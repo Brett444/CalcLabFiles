@@ -1,0 +1,129 @@
+[Format=1.0]
+
+[NotesStart]
+Demonstrates the use of 'NonLinearSysOfEq' to solve a nonlinear system of algebraic equations.  The system is...
+
+x = x^2 + y^2 - 25
+y = x - 2*y
+
+This system must be cast into this form. In other words...
+
+x = f1(x,y,...)
+y = f2(x,y,...)
+.
+.
+.
+
+This system is represented by the user defined function nlsys.  NonLinearSysOfEq is called with an initial guess at the answer.  The initial guess doesn't have to be very close but if there is more than one solution, the guess may affect which solution is returned.
+[NotesEnd]
+
+[CommandsStart]
+1 guess = [10,-11]  // Initial guess at zeros.  Needn't be very close.
+1 soln = NonLinearSysOfEq(guess, nlsys)
+1 confirm = nlsys(soln')
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+nlsys(xs)
+{
+	ys = newmat(1,2,0);
+	
+	ys{0,0} = xs{0,0}^2 + xs{0,1}^2 - 25;
+	ys{0,1} = xs{0,0} - 2*xs{0,1};
+	
+	return(ys);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+445
+724
+398
+854
+Figure 1
+2
+[TextVarStart]
+soln
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+confirm
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+1
+-1
+-1
+-1
+-1
+50
+435
+799
+1256
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+444
+724
+860
+1260
+nlsys
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

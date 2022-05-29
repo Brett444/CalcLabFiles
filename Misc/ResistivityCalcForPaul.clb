@@ -1,0 +1,121 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 z = 1.3716
+1 rho = 1e11
+1 a = 0.5
+1 r = 0.254
+1 Resistance = 1 / Integrate(-r, r, FuncToIntegrate)
+1 LowestResistance = rho*2*(a-r) / (2*r*z)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+FuncToIntegrate(x)
+{
+	z = 1.3716;
+	rho = 1e11;
+	a = 0.29;
+	r = 0.254;
+	
+	functionvalue = z/rho;
+	functionvalue /= 2*a - 2*sqrt(r*r - x*x);
+	return(functionvalue);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+480
+717
+1433
+1702
+Figure 1
+2
+[TextVarStart]
+Resistance
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+LowestResistance
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+1
+[NumFuncWndsEnd]
+
+[FuncWndStart]
+1
+-1
+-1
+-1
+-1
+75
+447
+1427
+1880
+FuncToIntegrate
+[FuncWndEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

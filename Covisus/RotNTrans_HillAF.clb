@@ -1,0 +1,340 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+0 kernel = ReadImage(C:\Covisus\HillAFKrnl8.png)
+0 dmy = Grayscale(kernel, 0)
+1 kernel = ReadImage(C:\Covisus\kernel8grayHillAF.jpg)
+1 dmy = Threshold(kernel, 10, 255, 125)
+1 img1 = ReadImage(C:\TempImages\Temp\1634070520.6371076.png)
+0 img1 = Shift(img1, 60, 60, 0, 0)
+0 img1 = Rotate(img1, 0, 0, 1)
+1 img0 = Rebin(img1, 8, 8)
+1 Timer_Start(1)
+1 com = CenterOfMass(img0, 100)
+1 hedges = Conv(img0, edge_horiz)
+1 vedges = Conv(img0, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+0 edges = CannyEdges(img0, 400, 300)
+1 edgesS = edges
+1 dmy = Threshold(edges, 0, 255, 180)
+1 edgesS = edges
+1 radiusguess = 86
+1 radiusrange = 3
+1 radiusstep = 0.1
+1 searchsize = 41 // make me odd
+1 corrres = CrossCorrCircle(edges, com{0,0}, com{0,1}, searchsize, searchsize, radiusguess, radiusrange, radiusstep)
+1 pkloc = PeakLoc(corrres)
+1 pklayerind1 = floor(pkloc{0,0}/searchsize)
+1 pklayer1 = GetLayer(corrres, pklayerind1)
+1 pkloc1 = PeakLoc(pklayer1)
+1 corrcenter = com + (pkloc1 - (searchsize-1)/2)
+1 radius1 = radiusguess - (radiusrange/2) + (radiusstep*pklayerind1)
+1 corrband = 15
+1 corr = RotCrossCorr(edges, kernel, radius1-corrband, radius1+corrband, 0, 360, corrcenter{0,0}, corrcenter{0,1})
+1 corr = Suppress(corr, -1e9, 0, 1)
+0 //
+1 corrloc1 = PeakLoc(corr)
+1 anglevec = [corrloc1{0,1} - corrcenter{0,1}, corrcenter{0,0} - corrloc1{0,0}]
+0 //
+1 angle = aTan2(anglevec{0,1}, anglevec{0,0})
+1 angle *= 180/pi
+0 angle = if(angle>0, angle-90, angle+90)
+0 angle = angle - 90
+1 kernangle = angle-90
+1 rotatecenter = corrcenter * 8
+1 rowshift = Rows(img1)/2 - rotatecenter{0,0}
+1 colshift = Cols(img1)/2 - rotatecenter{0,1}
+1 imgC = Shift(img1, colshift, rowshift, 0, 0)
+1 imgC = Rotate(imgC, -angle, 0, 1)
+1 kernel = Rotate(kernel, kernangle, 0, 1)
+1 edges{corrloc1{0,0}-32:corrloc1{0,0}+32, corrloc1{0,1}-32:corrloc1{0,1}+32} += kernel*2
+1 edges{corrcenter{0,0}-1:corrcenter{0,0}+1, corrcenter{0,1}-1:corrcenter{0,1}+1} = maxval(edges)
+1 edges{corrloc1{0,0}-1:corrloc1{0,0}+1, corrloc1{0,1}-1:corrloc1{0,1}+1} = maxval(edges)
+1 corr{corrcenter{0,0}-1:corrcenter{0,0}+1, corrcenter{0,1}-1:corrcenter{0,1}+1} = 0.2
+1 edges = AddCircle(edges, corrcenter{0,0}, corrcenter{0,1}, radius1, maxval(edges), 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+5
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+69
+1371
+2354
+3595
+img0
+1
+1
+2
+1.00
+92,392,38,340
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1540
+2196
+54
+630
+kernel
+1
+1
+3
+1.00
+0,62,0,62
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+88
+1297
+1249
+2407
+imgC
+1
+1
+-1
+1.00
+903,3147,370,2604
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+965
+2144
+1209
+2378
+edges
+1
+1
+2
+1.00
+102,384,52,322
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1046
+2173
+2508
+3539
+corr
+1
+1
+2
+1.00
+128,376,55,313
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+2
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1359
+2146
+651
+1560
+Figure 1
+1
+1
+54.000000
+0.960217
+0.024367
+0.275414
+0.039203
+[SurfStart]
+pklayer1
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+865
+2173
+2314
+3639
+Figure 2
+1
+1
+738.826050
+0.891808
+0.003645
+0.423374
+0.159437
+[SurfStart]
+corr
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+974
+2380
+2921
+3732
+Figure 1
+6
+[TextVarStart]
+angle
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+anglevec
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+corrcenter
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+corrloc1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+rowshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+colshift
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

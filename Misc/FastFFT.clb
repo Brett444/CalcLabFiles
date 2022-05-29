@@ -1,0 +1,158 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 data1 = RandUnif(8, 8, 0, 100)
+1 data2 = RandUnif(8, 8, 0, 100)
+1 conv0 = Conv(data1, data2)
+0 data1 = PadToNewSize(data1, 16, 16)
+0 data2 = PadToNewSize(data2, 16, 16)
+1 Timer_Start(1)
+1 fft1 = FFTComplex(data1, 0, 1)
+1 fft2 = FFTComplex(data2, 0, 1)
+1 time1 = Timer_Elapsed(1)
+1 Timer_Start(1)
+1 fft1b = FFT2DFromReal(data1)
+1 fft2b = FFT2DFromReal(data2)
+1 time2 = Timer_Elapsed(1)
+1 datacheck = FFT2DFromReal(fft1b, 1)
+0 prod = ComplexMult(fft1, fft2)
+0 prodb = ComplexMult(fft1b, fft2b)
+0 conv1 = InvFFTComplex(prod, 1)
+0 spec = Read(C:\TempData\SpecMat.txt)'
+0 fft1b = AddNegFreqs(fft1b)
+0 prodb = AddNegFreqs(prodb)
+0 diff = prod - prodb
+1 datacheck1 = InvFFTComplex(fft1, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+3
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1029
+1589
+3189
+3749
+Figure 2
+2
+[TextVarStart]
+time1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+time2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1003
+1748
+1209
+3793
+Figure 3
+1
+[TextVarStart]
+datacheck
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+248
+994
+1204
+3775
+Figure 4
+1
+[TextVarStart]
+data1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

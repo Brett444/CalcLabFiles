@@ -1,0 +1,103 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img = ReadImage(cannydemo.bmp)
+1 img_r = redcomp(img)
+1 hcomp = conv(img_r, edge_horiz)
+1 vcomp = conv(img_r, edge_vert)
+1 edgestr = (hcomp*hcomp + vcomp*vcomp)^0.5
+1 edgedirs = atan(vcomp/hcomp)
+1 hithresh = medianex(edgestr, 0.94)
+1 lothresh = hithresh*0.7
+1 canedges = CannyEdges(edgestr, edgedirs, hithresh, lothresh)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+2
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+41
+332
+927
+1170
+img
+1
+1
+1
+1
+0
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+335
+612
+929
+1171
+canedges
+1
+0
+1
+1
+0
+[ImageWndEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

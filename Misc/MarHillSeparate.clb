@@ -1,0 +1,189 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 mhk = Read(C:\TempData\MHKernel1.txt)
+1 mhkW = SingValDecompW(mhk)
+1 mhkU = SingValDecompU(mhk)
+1 mhkV = SingValDecompV(mhk)
+1 Wmat = newmat(17,17,0)
+1 Wmat{0,0} = mhkW{0,0}
+1 mhka = mhkU *@ Wmat *@ mhkV'
+1 Wmat = newmat(17,17,0)
+1 Wmat{1,1} = mhkW{0,1}
+1 mhkb = mhkU *@ Wmat *@ mhkV'
+1 mhk2 = mhka + mhkb
+1 diff = (mhk - mhk2) / mhk
+1 diff = Suppress(diff, 1e20, 0, 0)
+1 randmat = randunif(100, 100, -10, 10)
+1 conv1 = Conv(randmat, mhk)
+1 sepkern = SeparateFilter(mhka)
+1 colveca = sepkern{#,0}
+1 rowveca = sepkern{#,1}'
+1 sepkern = SeparateFilter(mhkb)
+1 colvecb = sepkern{#,0}
+1 rowvecb = sepkern{#,1}'
+1 convA = Conv(randmat, colveca)
+1 convA = Conv(convA, rowveca)
+1 convB = Conv(randmat, colvecb)
+1 convB = Conv(convB, rowvecb)
+1 conv2 = convA + convB
+1 diff2 = (conv1 - conv2) / conv1
+1 colveca = Concat(1, colveca, colvecb)
+1 rowveca = Concat(0, rowveca, rowvecb)
+1 conv3 = Conv_Separated(randmat, colveca, rowveca)
+1 diff3 = (conv1 - conv3) / conv1
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+2
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+137
+1128
+2652
+3773
+Diff between the convolution results 1 & 2
+1
+1
+178.200012
+0.969825
+-0.021848
+0.177210
+-0.166010
+[SurfStart]
+diff2
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1131
+2120
+2649
+3780
+Diff between the convolution results 1 & 3
+1
+1
+163.350006
+0.956839
+-0.057285
+0.230559
+-0.167392
+[SurfStart]
+diff3
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+842
+1464
+1829
+2635
+Figure 2
+1
+[TextVarStart]
+conv3
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

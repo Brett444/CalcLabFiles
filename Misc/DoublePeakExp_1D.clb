@@ -1,0 +1,188 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 desiredbin = 51.5
+1 ringwidth = 512 / desiredbin
+1 noiseamp = 10
+1 be = newmat(1024, 1024, 0)
+1 be = BullseyeGen(be, ringwidth, 10)
+1 line1 = be{512,#}
+1 line1 -= Mean(line1)
+1 impresp = newmat(1, 1024, 0)
+1 impresp{0, 508:516} = 5
+1 line2 = Conv_FFT(line1, impresp)
+1 line2 += RandUnif(1, 1024, -noiseamp, noiseamp)
+0 line2 = Apodize(line, 1024/8, 0)
+1 line2mags = FFTMags(line2)
+1 line3 = DeConv_FFT(line2, impresp)
+1 line3mags = FFTMags(line3)
+1 diff = line1 - line3
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+2
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+68
+405
+622
+1885
+line3
+0.000000
+1023.000000
+200.000000
+0.000000
+-31.604938
+28.827160
+20.000000
+-20.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+line3
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+397
+715
+623
+1884
+line3 mags
+0.000000
+512.000000
+100.000000
+0.000000
+0.000000
+10.000000
+2.000000
+0.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+line3mags
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+718
+960
+1450
+1864
+Figure 1
+2
+[TextVarStart]
+desiredbin
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+ringwidth
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

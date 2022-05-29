@@ -1,0 +1,194 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img0 = ReadImage(C:\Covisus\CollarSet3B\Collar3Img0.png)
+1 img1 = ReadImage(C:\Covisus\CollarSet3B\Collar3Img1.png)
+1 img2 = ReadImage(C:\Covisus\CollarSet3B\Collar3Img2.png)
+1 img3 = ReadImage(C:\Covisus\CollarSet3B\Collar3Img3.png)
+1 img4 = ReadImage(C:\Covisus\CollarSet3B\Collar3Img4.png)
+0 kernel = img3{1660-200:1660+200, 2590-200:2590+200}
+1 kernel = img0{2100-200:2100+200, 2000-200:2000+200}
+1 kernel = rotate(kernel, 182, 0, 1)
+1 kernel = kernel{200-112:200+112, 190-112:190+112}
+1 kernel = decimate(kernel, 4, 4)
+0 //
+1 img0h = decimate(img0, 4, 4)
+1 accum0 = HoughCircular(img0h, 0.1)
+1 accumpk0 = MaxValInd(accum0)
+1 img0{accumpk0{0,0}*4-5:accumpk0{0,0}*4+5, accumpk0{0,1}*4-5:accumpk0{0,1}*4+5} = 255
+0 //
+1 img1h = decimate(img1, 4, 4)
+1 accum1 = HoughCircular(img1h, 0.1)
+1 accumpk1 = MaxValInd(accum1)
+1 img1{accumpk1{0,0}*4-5:accumpk1{0,0}*4+5, accumpk1{0,1}*4-5:accumpk1{0,1}*4+5} = 255
+0 //
+1 img2h = decimate(img2, 4, 4)
+1 accum2 = HoughCircular(img2h, 0.1)
+1 accumpk2 = MaxValInd(accum2)
+1 img2{accumpk2{0,0}*4-5:accumpk2{0,0}*4+5, accumpk2{0,1}*4-5:accumpk2{0,1}*4+5} = 255
+0 //
+1 img3h = decimate(img3, 4, 4)
+1 accum3 = HoughCircular(img3h, 0.1)
+1 accumpk3 = MaxValInd(accum3)
+1 img3{accumpk3{0,0}*4-5:accumpk3{0,0}*4+5, accumpk3{0,1}*4-5:accumpk3{0,1}*4+5} = 255
+0 //
+1 img4h = decimate(img4, 4, 4)
+1 accum4 = HoughCircular(img4h, 0.1)
+1 accumpk4 = MaxValInd(accum4)
+1 img4{accumpk4{0,0}*4-5:accumpk4{0,0}*4+5, accumpk4{0,1}*4-5:accumpk4{0,1}*4+5} = 255
+1 hedges0 = Conv(img0, edge_horiz)
+1 vedges0 = Conv(img0, edge_vert)
+1 edges0 = sqrt(hedges0^2 + vedges0^2)
+1 dmy = Threshold(edges0, 0, 255, 80)
+1 kernel = newmat(65, 15, 0)
+1 kernel{#, 5:9} = 255
+0 corr = RotCrossCorr(edges0, kernel, 700, 800, 0, 360, accumpk0{0,0}, accumpk0{0,1})
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+5
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+225
+1123
+1025
+2076
+img0
+1
+1
+1
+1.00
+2435,2941,1334,1736
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+224
+1120
+2058
+3107
+img1
+1
+1
+1
+1.00
+1101,1607,1345,1747
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1120
+2005
+1020
+2071
+img2
+1
+1
+1
+1.00
+1049,1555,1293,1689
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1126
+2019
+2056
+3110
+img3
+1
+1
+1
+1.00
+2411,2919,1291,1691
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+720
+1612
+2807
+3854
+img4
+1
+1
+1
+1.00
+2390,2894,1309,1709
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

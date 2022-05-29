@@ -1,0 +1,90 @@
+[Format=1.0]
+
+[NotesStart]
+Total square feet of 368 Highland
+
+(5 rooms plus two closets)
+[NotesEnd]
+
+[CommandsStart]
+1 r1 = 13.5 * 11.167  // living room
+1 r2 = 15.667 * 10  // kitchen
+1 r3 = 16.833 * 9.167  // southeast room
+1 r4 = 9.5 * 5.75  // bathroom
+1 r5 = 11.25 * 13.333  // northeast room
+1 c1 = 3 * 6.667  // closet
+1 c2 = c1  // closet
+1 total = r1+r2+r3+r4+r5+c1+c2
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-12
+-8
+-1
+-1
+224
+344
+684
+900
+Total Floor Space
+1
+[TextVarStart]
+total
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+1
+-12
+-8
+-1
+-1
+56
+216
+696
+1044
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

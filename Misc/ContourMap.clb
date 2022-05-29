@@ -1,0 +1,128 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 g1 = GaussMat(500, 500, 40, 80)
+1 g2 = GaussMat(500, 500, 40, 40)
+1 g3 = GaussMat(500, 500, 80, 40)
+1 g4 = GaussMat(500, 500, 60, 60)
+1 g1 = Shift(g1, 100, 100, 0)
+1 g2 = Shift(g2, -100, -100, 0)
+1 g3 = Shift(g3, -100, 100, 0)
+1 g4 = Shift(g4, 100, -100, 0)
+1 g5 = g1 + g2 + g3 + g4
+1 cntrs = Contours(g5, 0.1, 0.2, 0.6)
+1 drawn = DrawContours(cntrs, 500, 500, 1)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+1
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+169
+864
+1857
+2455
+drawn
+1
+1
+0
+1.00
+0,499,0,499
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+1
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+174
+1469
+2460
+3811
+Figure 2
+1
+1
+523.950012
+0.899353
+-0.082517
+0.350378
+-0.248173
+[SurfStart]
+g5
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

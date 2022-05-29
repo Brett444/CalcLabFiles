@@ -1,0 +1,147 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 numgames = 2000
+1 res1 = RandGauss(numgames, 1, 155, 60, 111)
+1 res2 = RandGauss(numgames, 1, 150, 60)
+1 res1hist = Histo(res1, 40, 50, 250)
+1 histoy = res1hist{0, #}
+1 histox = res1hist{1, #}
+1 perc = WinPerc(res1, res2)
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+WinPerc(TeamA, TeamB)
+{
+	winsa = 0;
+	winsb = 0;
+	for(i=0; i<Rows(TeamA); i=i+1)
+	{
+		if (TeamA{i,0} > TeamB{i,0})
+			winsa += 1;
+		else
+			winsb += 1;
+	}
+	return(winsa / Rows(TeamA));
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+89
+1123
+2414
+3769
+Figure 1
+52.000000
+248.000000
+50.000000
+100.000000
+12.000000
+86.000000
+20.000000
+20.000000
+1
+1
+0
+0
+1
+[DataSetStart]
+histoy
+histox
+0
+4
+255
+0
+0
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1115
+1598
+2903
+3494
+Figure 1
+1
+[TextVarStart]
+perc
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

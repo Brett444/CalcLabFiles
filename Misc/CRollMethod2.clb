@@ -1,0 +1,198 @@
+[Format=1.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 xdata = Read(C:\xdata.txt)
+1 ydata = Read(C:\ydata.txt)
+1 xdata = xdata'
+1 ydata = ydata'
+1 radiusvec = RadiusOfCurv(xdata, ydata)
+1 R = revcols(radiusvec)
+1 b = 54.4764
+1 d = 31.452
+1 c1 = -2*(b^2*R^2 - b^2*d^2 + 2*d^2*R*b)^0.5
+1 c1 += 2*b*R
+1 c1 -= 2*b^2
+1 xloc = c1 / (2*(d^2 + b^2))
+1 xloc *= d
+1 dx = xloc + d
+1 dy = b/d*xloc + b
+1 yaxis = (dx^2 + dy^2)^0.5
+1 diffs = differ(yaxis)
+1 datasave = newmat(cols(diffs), 2)
+1 datasave{#, 0} = xdata'
+1 datasave{#, 1} = diffs'
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+differ(v)
+{
+	buf = v;
+	for(i=1; i<cols(buf); i+=1)
+	{
+		v{0,i} = buf{0,i} - buf{0,i-1};
+	}
+	return(v);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+3
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+275
+506
+767
+1264
+Part Shape (ydata)
+0.000000
+100.000000
+20.000000
+0.000000
+-1.000000
+4.000000
+1.000000
+-1.000000
+1
+[DataSetStart]
+ydata
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+37
+274
+768
+1265
+y axis
+0.000000
+100.000000
+20.000000
+0.000000
+-0.119138
+1.407401
+0.500000
+0.000000
+1
+[DataSetStart]
+yaxis
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+508
+745
+768
+1261
+diffs
+0.000000
+100.000000
+20.000000
+0.000000
+-0.147545
+1.409984
+0.500000
+0.000000
+1
+[DataSetStart]
+diffs
+Var1
+0
+0
+255
+0
+0
+1
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1280
+800
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

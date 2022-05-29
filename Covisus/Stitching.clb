@@ -1,0 +1,127 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 imgset1 = ReadImageSet(C:\StitchImages, image5.png, image4.png, image3.png, image2.png, image1.png, image0.png)
+0 imgset1 = ReadImageSet(C:\Users\Brett\Downloads, StitchImage1.jpg, StitchImage2.jpg)
+1 layer = GetLayer(imgset1, 0)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = layer
+1 layer = GetLayer(imgset1, 1)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = AddLayer(imgset2, layer)
+1 layer = GetLayer(imgset1, 2)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = AddLayer(imgset2, layer)
+1 layer = GetLayer(imgset1, 3)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = AddLayer(imgset2, layer)
+1 layer = GetLayer(imgset1, 4)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = AddLayer(imgset2, layer)
+1 layer = GetLayer(imgset1, 5)
+1 dmy = GrayScale(layer, 0)
+1 layer = Rebin(layer, 8, 8)
+1 imgset2 = AddLayer(imgset2, layer)
+0 pano = StitchImages(imgset2)
+1 keypnts = KeyPointsDetect(layer, 2)
+1 keypntlocs = keypnts{#, [0,1]}
+1 layer = MarkLocations(layer, keypntlocs, 1, 255)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+1
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+149
+2151
+2890
+3577
+imgset2
+1
+1
+0
+1.00
+0,374,545,2455
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+1
+[NumVideoWndsEnd]
+
+[VideoWndStart]
+1
+-1
+-1
+-1
+-1
+157
+1374
+1850
+2888
+imgset2
+1
+1
+1.00
+0,374,0,499
+[VideoWndEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

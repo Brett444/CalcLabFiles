@@ -1,0 +1,78 @@
+[Format=1.1]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 imgset = ReadImageSet(0 , E:\EIDOLON - ROUND 4, ASHFY_1MM_CORNEA.tif, HPSAIOL_1MM_CORNEA.tif)
+1 imgset = SubtractMins(imgset)
+0 now save the set to disk
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+SubtractMins(imgset)
+{
+	minval = 32768;
+	
+	lyrs = Layers(imgset);
+	for(i=0; i<lyrs; i+=1)
+	{
+		img = GetLayer(imgset, i);
+		img -= minval;
+		dum = SetLayer(imgset, i, img);
+	}
+	
+	return(imgset);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+1920
+1080
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+

@@ -1,0 +1,387 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Covisus\CollarSet1C\Autoliv.Collar.0002_cam18159278_g5.0_ex19.996.png)
+1 img0 = Rebin(img1, 8, 8)
+1 imgf = img0
+1 kernel = ReadImage(C:\Covisus\Kernel8graycentered.jpg)
+0 dmy = GrayScale(kernel, 0)
+1 dmy = Threshold(kernel, 10, 255, 125)
+1 Timer_Start(1)
+1 hedges = Conv(img0, edge_horiz)
+1 vedges = Conv(img0, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 edgesT = edges
+1 dmy = Threshold(edgesT, 0, 255, 50)
+1 centerguess = [188, 250]
+1 radiusguess = 85.9
+1 radiusrange = 1
+1 radiusstep = 0.1
+1 searchsize = 31
+1 corrres = CrossCorrCircle(edgesT, centerguess{0,0}, centerguess{0,1}, searchsize, searchsize, radiusguess, radiusrange, radiusstep)
+1 pkloc = PeakLoc(corrres)
+1 pklayerind1 = floor(pkloc{0,0}/searchsize)
+1 pklayer1 = GetLayer(corrres, pklayerind1)
+1 pkloc1 = PeakLoc(pklayer1)
+1 pkval1 = Peak(pklayer1)
+1 corrcenter = centerguess + (pkloc1 - (searchsize-1)/2)
+1 radius1 = radiusguess - (radiusrange/2) + (radiusstep*pklayerind1)
+1 dmy = Threshold(edges, 10, 255, 80)
+1 corrrad = radiusguess-9
+1 corrband = 17
+1 corr = RotCrossCorr(edges, kernel, corrrad-corrband, corrrad+corrband, 0, 360, corrcenter{0,0}, corrcenter{0,1})
+1 corr = Suppress(corr, -1e9, 0, 1)
+0 //
+1 corr = Conv(corr, unif_3x3)
+1 corr = Conv(corr, unif_3x3)
+1 corr = Conv(corr, unif_3x3)
+1 signal = MaxVal(corr)
+1 corrloc1 = PeakLoc(corr)
+1 anglevec = [corrloc1{0,1} - corrcenter{0,1}, corrcenter{0,0} - corrloc1{0,0}]
+0 //
+1 r2 = corrloc1{0,0} + 2*anglevec{0,1}
+1 c2 = corrloc1{0,1} - 2*anglevec{0,0}
+1 subcorr = corr{r2-25:r2+25, c2-25:c2+25}
+1 corrloc2 = PeakLoc(subcorr)
+1 corrloc2 -= 25
+1 corrloc2 += [r2, c2]
+0 //
+1 corrbuf = corr
+1 corrbuf{corrloc1{0,0}-10:corrloc1{0,0}+10, corrloc1{0,1}-10:corrloc1{0,1}+10} = 0
+1 corrbuf{corrloc2{0,0}-10:corrloc2{0,0}+10, corrloc2{0,1}-10:corrloc2{0,1}+10} = 0
+1 sig2 = MaxVal(corrbuf)
+1 signalstrength = signal / sig2
+0 //
+1 angle = aTan2(anglevec{0,1}, anglevec{0,0})
+1 angle *= 180/pi
+1 kernangle = angle
+1 angle = if(angle>0, angle-90, angle+90)
+0 ////
+1 guess1 = corrcenter + [-(radius1-10)*sind(angle), (radius1-10)*cosd(angle)]
+1 guess2 = corrcenter - [-(radius1-10)*sind(angle), (radius1-10)*cosd(angle)]
+1 g1sum = sum(img0{guess1{0,0}-5:guess1{0,0}+5, guess1{0,1}-5:guess1{0,1}+5})
+1 g2sum = sum(img0{guess2{0,0}-5:guess2{0,0}+5, guess2{0,1}-5:guess2{0,1}+5})
+1 brightloc = if (g1sum > g2sum, guess1, guess2)
+1 rectloc = corrcenter + [-(radius1-10)*sind(angle), (radius1-10)*cosd(angle)]
+1 angle = if(Mag(brightloc-rectloc) < 20, angle, angle + 180)
+1 angle = if(angle > 180, angle-360, angle)
+0 ////
+1 corrrow1 = round(corrloc1{0,0})
+1 corrcol1 = round(corrloc1{0,1})
+1 corrrow2 = round(corrloc2{0,0})
+1 corrcol2 = round(corrloc2{0,1})
+1 img0{corrrow1-1:corrrow1+1, corrcol1-1:corrcol1+1} = 0
+1 img0{corrrow2-1:corrrow2+1, corrcol2-1:corrcol2+1} = 0
+1 edges{corrloc1{0,0}-1:corrloc1{0,0}+1, corrloc1{0,1}-1:corrloc1{0,1}+1} = 255
+1 edges{corrloc2{0,0}-1:corrloc2{0,0}+1, corrloc2{0,1}-1:corrloc2{0,1}+1} = 255
+1 img0 = AddLine(img0, corrcenter{0,0}, corrcenter{0,1}, angle, 255)
+1 img0{corrcenter{0,0}-1:corrcenter{0,0}+1, corrcenter{0,1}-1:corrcenter{0,1}+1} = 125
+1 img0 = AddCircle(img0, corrcenter{0,0}, corrcenter{0,1}, corrrad-corrband, 255, 1)
+1 img0 = AddCircle(img0, corrcenter{0,0}, corrcenter{0,1}, corrrad+corrband, 255, 1)
+0 //
+1 kernel = rotate(kernel, kernangle-90, 0, 1)  // kernangle-90 because rotation starts from vertical
+1 edges{corrloc1{0,0}-12:corrloc1{0,0}+12, corrloc1{0,1}-12:corrloc1{0,1}+12} += kernel
+1 kernel = rotate(kernel, 180, 0, 1)
+1 edges{corrloc2{0,0}-12:corrloc2{0,0}+12, corrloc2{0,1}-12:corrloc2{0,1}+12} += kernel
+0 //
+1 rotatecenter = corrcenter * 8
+1 rowshift = Rows(img1)/2 - rotatecenter{0,0}
+1 colshift = Cols(img1)/2 - rotatecenter{0,1}
+1 imgC = Shift(img1, colshift, rowshift, 0, 0)
+1 imgC = Rotate(imgC, -angle, 0, 1)
+1 imgC = AddLine(imgC, 1500, 2000, 0, 255)
+0 //
+1 radiusguess = 117
+1 radiusrange = 1
+1 radiusstep = 0.05
+1 searchsize = 17
+0 ///////
+1 rowshift = Rows(img0)/2 - corrcenter{0,0}
+1 colshift = Cols(img0)/2 - corrcenter{0,1}
+1 imgf = Shift(imgf, colshift, rowshift, 0, 0)
+1 imgf = Rotate(imgf, -angle, 0, 1)
+0 //////////
+1 hedges = Conv(imgf, edge_horiz)
+1 vedges = Conv(imgf, edge_vert)
+1 edgesR = sqrt(hedges^2 + vedges^2)
+1 edgesR = ZeroBorder(edgesR, 5, 5)
+1 dmy = Threshold(edgesR, 0, 255, 50)
+0 ////////////
+1 centerguess = [188, 250]
+1 corrres = CrossCorrCircle(edgesR, centerguess{0,0}, centerguess{0,1}, searchsize, searchsize, radiusguess, radiusrange, radiusstep)
+1 pkloc = PeakLoc(corrres)
+1 pklayerind2 = floor(pkloc{0,0}/searchsize)
+1 pklayer2 = GetLayer(corrres, pklayerind2)
+1 pkloc2 = PeakLoc(pklayer2)
+1 pkval2 = Peak(pklayer2)
+1 center2 = centerguess + (pkloc2 - (searchsize-1)/2)
+1 radius2 = radiusguess - (radiusrange/2) + (radiusstep*pklayerind1)
+1 img0{center2{0,0}-1:center2{0,0}+1, center2{0,1}-1:center2{0,1}+1} = 0
+1 imgf = AddCircle(imgf, center2{0,0}, center2{0,1}, radius2, 255, 1)
+1 algtime = Timer_Elapsed(1)
+1 partcenter = center2 * 8
+1 mark = round(partcenter)
+1 imgC{mark{0,0}-5:mark{0,0}+5, mark{0,1}-5:mark{0,1}+5} = 0
+1 shift = [rows(imgC)/2, cols(imgC)/2] - partcenter
+1 imgC = Shift(imgC, shift{0,1}, shift{0,0}, 0, 0)
+1 dmy = WriteImagesToDisk(imgC, C:\Covisus\ImgResults\CollarSet3Img49.png)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+4
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+545
+1734
+2229
+3401
+img0
+1
+1
+2
+1.00
+102,386,61,335
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+385
+1620
+1229
+2559
+imgf
+1
+1
+2
+1.00
+89,411,40,324
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+183
+1520
+2380
+3729
+imgC
+1
+1
+-1
+1.00
+681,3307,187,2677
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+628
+1723
+450
+1644
+edges
+1
+1
+2
+1.00
+108,396,59,309
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+2
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1442
+2175
+2432
+3247
+Figure 1
+1
+1
+31.500000
+0.897557
+-0.019783
+0.160146
+-0.410309
+[SurfStart]
+pklayer1
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1452
+2232
+3071
+3791
+Figure 2
+1
+1
+-10.200004
+0.961552
+-0.027236
+0.272822
+-0.015601
+[SurfStart]
+pklayer2
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+1031
+2164
+1579
+2641
+Figure 1
+5
+[TextVarStart]
+center2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+radius1
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+radius2
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+algtime
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextVarStart]
+angle
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+
