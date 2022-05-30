@@ -1,0 +1,265 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\S62342\screw2.png)
+1 img1 = Rebin(img1, 4, 4)
+1 img1 = Rotate(img1, 43, 0, 1)
+1 hedges = Conv(img1, edge_horiz)
+1 vedges = Conv(img1, edge_vert)
+1 edges = sqrt(hedges^2 + vedges^2)
+1 edges = ZeroBorder(edges, 5, 5)
+1 edgesT = edges
+1 dmy = Threshold(edgesT, 0, 240, 200)
+1 canny = CannyEdges(img1, 240, 150)
+1 imgT = img1
+1 dmy = Threshold(imgT, 0, 255, 180)
+1 finaledges = canny //  imgT, edgesT or canny
+1 ksize = 15
+1 rad = (ksize+1) / 2
+1 kern = newmat(ksize,ksize,0)
+1 kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1)
+0 dmy = Dilate(finaledges, kern)
+1 conncomps = ConnectedComponents(finaledges, 4)
+1 connareas = ConnCompsAreas(conncomps)
+0 conncomps = ConnCompsFilterAreas(conncomps, 22000, 0)
+0 conncomps = ConnCompsFilterAreas(conncomps, 10000)
+0 dmy = Dilate(conncomps, kern)
+0 conncomps = Blur(conncomps, ksize)
+1 finalimg = finaledges // finaledges, conncomps
+0 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
+1 finalimg *= 250 / MaxVal(finalimg)
+1 template = BuildTemplate()
+0 template = Resize(template, 500, 500)
+1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
+1 tmresult = GetLayer(tempmatch, 0)
+1 tempmatch = TemplateMatchRot(finalimg, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
+1 tmresult = GetLayer(tempmatch, 0)
+1 tmresult = tmresult{0, 0:3}
+1 corrresult = GetLayer(tempmatch, 1)
+1 template2 = PadToNewSize(template, 750, 1000, 0, 1)
+1 template2 = Rotate(template2, tmresult{0,2}, 0, 1)
+0 template2 *= MaxVal(finalimg) / MaxVal(template2)
+1 template2 = Shift(template2, tmresult{0,1}-1000/2, tmresult{0,0}-750/2, 0)
+1 finalimg += template2
+[CommandsEnd]
+
+[NumFunctionsStart]
+1
+[NumFunctionsEnd]
+
+[FunctionStart]
+BuildTemplate()
+{
+	retmat = ReadImage(C:\Covisus\ScrewImgs\S62342\TemplateStart.png);
+	retmat = retmat{#, 0:749};
+	ksize = 19;
+	rad = (ksize+1)/2;
+	kern = newmat(ksize,ksize,0);
+	kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1);
+	dmy = Dilate(retmat, kern);
+	retmat = Blur(retmat, ksize);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	size *= 1.5;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
+	com = CenterOfMass(retmat);
+	retmat = Shift(retmat, size/2-com{0,0}, size/2-com{0,1}, 0);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	size *= 1.25;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
+
+	return(retmat);
+}
+[FunctionEnd]
+
+[NumGraphWndsStart]
+0
+[NumGraphWndsEnd]
+
+[NumImageWndsStart]
+4
+[NumImageWndsEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+132
+1021
+1651
+2702
+img1
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1320
+2230
+1873
+2708
+template
+1
+1
+1
+1.00
+0,390,0,390
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+139
+948
+2758
+3586
+finaledges
+1
+1
+0
+1.00
+104,896,17,733
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1311
+2245
+2691
+3785
+finalimg
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+1
+[NumSurfWndsEnd]
+
+[SurfWndStart]
+1
+-1
+-1
+-1
+-1
+1307
+2225
+992
+1889
+Figure 1
+1
+1
+387.436707
+0.991197
+-0.022403
+0.128364
+0.023440
+[SurfStart]
+corrresult
+Var1
+Var1
+0
+0
+255
+1
+1
+1
+0.000000
+1.000000
+0.000000
+1.000000
+1
+[SurfEnd]
+
+[SurfWndEnd]
+
+[NumTextWndsStart]
+1
+[NumTextWndsEnd]
+
+[TextWndStart]
+1
+-1
+-1
+-1
+-1
+899
+1313
+2439
+3779
+Figure 1
+1
+[TextVarStart]
+tmresult
+0
+0
+0
+1
+[TextVarEnd]
+
+[TextWndEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+
