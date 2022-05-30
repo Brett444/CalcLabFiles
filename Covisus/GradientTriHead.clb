@@ -7,6 +7,7 @@
 [CommandsStart]
 1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_1.png)
 1 img1 = Rebin(img1, 4, 4)
+0 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
 1 vedges = Conv(img1, edge_vert)
 1 edges = sqrt(hedges^2 + vedges^2)
@@ -16,30 +17,34 @@
 1 imgcanny = CannyEdges(img1, 240, 200)
 1 imgT = img1
 1 dmy = Threshold(imgT, 0, 255, 180)
-1 imgCC = imgT //  imgT, edgesT or imgcanny
-1 kern = newmat(15,15,0)
-1 kern = AddDisk(kern, 7, 7, 8, 1, 1)
-1 dmy = Dialate(imgCC, kern)
-1 conncomps = ConnectedComponents(imgCC, 4)
+1 finaledges = imgT //  imgT, edgesT or imgcanny
+1 ksize = 11
+1 rad = (ksize+1)/2
+1 kern = newmat(ksize,ksize,0)
+1 kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1)
+1 dmy = Dilate(finaledges, kern)
+1 conncomps = ConnectedComponents(finaledges, 4)
 1 connareas = ConnCompsAreas(conncomps)
-1 conncomps = ConnCompsFilterAreas(conncomps, 47000, 0)
-1 conncomps = ConnCompsFilterAreas(conncomps, 25000)
-1 dmy = Dialate(conncomps, kern)
-1 conncomps = Blur(conncomps, 25)
-0 imgcntrs = conncomps
-0 dmy = Threshold(imgcntrs, 0, 255, 1)
-0 cntrs = Contours(conncomps)
-0 drawnc = DrawContours(cntrs, 750, 1000)
-1 conncomps *= 250 / MaxVal(conncomps)
+1 conncomps = ConnCompsFilterAreas(conncomps, 35000, 0)
+1 conncomps = ConnCompsFilterAreas(conncomps, 5000)
+1 finalimg = conncomps // finaledges, conncomps
+1 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
+1 dmy = Dilate(finalimg, kern)
+1 finalimg = Blur(finalimg, 25)
+1 finalimg *= 250 / MaxVal(finalimg)
 1 template = BuildTemplate()
-1 template = Rotate(template, 43, 0, 1)
-0 template = Resize(template, 675, 675)
+0 template = Resize(template, 500, 500)
 1 tempmatch = TemplateMatchRot(conncomps, template, 1, 0, 355, 5)
 1 tmresult = GetLayer(tempmatch, 0)
 1 tempmatch = TemplateMatchRot(conncomps, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
 1 tmresult = GetLayer(tempmatch, 0)
 1 tmresult = tmresult{0, 0:3}
 1 corrresult = GetLayer(tempmatch, 1)
+1 template2 = PadToNewSize(template, 750, 1000, 0, 1)
+1 template2 = Rotate(template2, tmresult{0,2}, 0, 1)
+0 template2 *= 250/MaxVal(template2)
+1 template2 = Shift(template2, tmresult{0,1}-1000/2, tmresult{0,0}-750/2, 0)
+1 finalimg += template2
 [CommandsEnd]
 
 [NumFunctionsStart]
@@ -88,7 +93,7 @@ BuildTemplate()
 [NumGraphWndsEnd]
 
 [NumImageWndsStart]
-2
+4
 [NumImageWndsEnd]
 
 [ImageWndStart]
@@ -115,16 +120,52 @@ img1
 -1
 -1
 -1
-184
-1026
-2451
-3230
+1336
+2178
+1923
+2702
 template
 1
 1
 0
 1.00
 0,694,0,694
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1337
+2256
+2696
+3772
+finalimg
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+135
+1039
+2635
+3607
+finaledges
+1
+1
+0
+1.00
+32,968,0,749
 [ImageWndEnd]
 
 [NumVideoWndsStart]
@@ -141,18 +182,18 @@ template
 -1
 -1
 -1
-155
-1073
-2825
-3722
+1192
+1855
+1014
+1911
 Figure 1
 1
 1
-69.081467
-0.919722
--0.012891
-0.387930
--0.058786
+207.244415
+0.772350
+-0.020050
+0.633499
+0.041866
 [SurfStart]
 corrresult
 Var1
@@ -182,10 +223,10 @@ Var1
 -1
 -1
 -1
-1242
-1780
-2444
-3784
+1008
+1411
+2443
+3783
 Figure 1
 1
 [TextVarStart]
