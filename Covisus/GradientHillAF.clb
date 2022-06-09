@@ -26,7 +26,7 @@
 1 conncomps = ConnectedComponents(finaledges, 4)
 1 connareas = ConnCompsAreas(conncomps)
 1 conncomps = ConnCompsFilterAreas(conncomps, 25000, 0)
-1 conncomps = ConnCompsFilterAreas(conncomps, 3000)
+1 conncomps = ConnCompsFilterAreas(conncomps, 1000)
 1 finalimg = conncomps // finaledges, conncomps
 1 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
 1 dmy = Dilate(finalimg, kern)
@@ -127,7 +127,7 @@ template
 1
 0
 1.00
-0,525,0,525
+0,482,0,482
 [ImageWndEnd]
 
 [ImageWndStart]

@@ -5,24 +5,33 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\S62342\screw6.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_2.png)
 1 img1 = Rebin(img1, 4, 4)
-1 img1 = Rotate(img1, 43, 0, 1)
+0 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
 1 vedges = Conv(img1, edge_vert)
 1 edges = sqrt(hedges^2 + vedges^2)
 1 edges = ZeroBorder(edges, 5, 5)
 1 edgesT = edges
-1 dmy = Threshold(edgesT, 0, 240, 200)
-1 canny = CannyEdges(img1, 240, 150)
+1 dmy = Threshold(edgesT, 0, 240, 170)
+1 canny = CannyEdges(img1, 240, 200)
 1 imgT = img1
 1 dmy = Threshold(imgT, 0, 255, 180)
-1 finaledges = canny //  imgT, edgesT or canny
+1 finaledges = edgesT //  imgT, edgesT or canny
+1 ksize = 11
+1 rad = (ksize+1) / 2
+1 kern = newmat(ksize,ksize,0)
+1 kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1)
+0 dmy = Dilate(finaledges, kern)
+0 conncomps = ConnectedComponents(finaledges, 4)
+0 connareas = ConnCompsAreas(conncomps)
+0 conncomps = ConnCompsFilterAreas(conncomps, 40000, 0)
+0 conncomps = ConnCompsFilterAreas(conncomps, 5000)
+0 dmy = Dilate(conncomps, kern)
+0 conncomps = Blur(conncomps, ksize)
 1 finalimg = finaledges // finaledges, conncomps
+0 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
 1 finalimg *= 250 / MaxVal(finalimg)
-1 com = CenterOfMass(finalimg)
-1 halfsize = 250
-1 finalimg = finalimg{com{0,0}-halfsize:com{0,0}+halfsize, com{0,1}-halfsize:com{0,1}+halfsize}
 1 template = BuildTemplate()
 0 template = Resize(template, 500, 500)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
@@ -45,27 +54,40 @@
 [FunctionStart]
 BuildTemplate()
 {
-	retmat = ReadImage(C:\Covisus\ScrewImgs\S62342\TemplateStart.png);
-	retmat = retmat{#, 0:749};
-	ksize = 19;
-	rad = (ksize+1)/2;
-	kern = newmat(ksize,ksize,0);
-	kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1);
+	thick = 1;
+	retmat = newmat(1000, 1000, 0);
+	
+	retmat = AddLineSeg(retmat, 445, 322, 124, 362, thick);
+	retmat = AddLineSeg(retmat, 124, 362, 103, 502, thick);
+	retmat = AddLineSeg(retmat, 103, 502, 215, 500, thick);
+	retmat = AddLineSeg(retmat, 215, 500, 420, 770, thick);
+	retmat = AddLineSeg(retmat, 420, 770, 545, 714, thick);
+	retmat = AddLineSeg(retmat, 545, 714, 492, 618, thick);
+	retmat = AddLineSeg(retmat, 492, 618, 621, 306, thick);
+	retmat = AddLineSeg(retmat, 621, 306, 510, 218, thick);
+	retmat = AddLineSeg(retmat, 510, 218, 445, 322, thick);
+	kern = newmat(21,21,0);
+	kern = AddDisk(kern, 10, 10, 11, 1, 1);
 	dmy = Dilate(retmat, kern);
-	retmat = Blur(retmat, ksize);
+	retmat = Blur(retmat, 20);
 	retmat = CropByValue(retmat, 0);
 	if (Rows(retmat) > Cols(retmat))
 		size = Rows(retmat);
 	else
 		size = Cols(retmat);
+	
+	size *= 1.5;
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
-	newsize = 310;
-	// add border so we don't have enough room to 
-	// match on particle cloud
-	border = 20;
-	retmat = Resize(retmat, newsize, newsize, 1);
-	retmat = PadToNewSize(retmat, newsize+border, newsize+border, 0, 1);
-
+	com = CenterOfMass(retmat);
+	retmat = Shift(retmat, size/2-com{0,0}, size/2-com{0,1}, 0);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	size *= 1.2;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
+	
 	return(retmat);
 }
 [FunctionEnd]
@@ -84,10 +106,10 @@ BuildTemplate()
 -1
 -1
 -1
-132
-1021
-1651
-2702
+182
+1071
+1392
+2443
 img1
 1
 1
@@ -102,16 +124,16 @@ img1
 -1
 -1
 -1
-1320
-2230
-1873
-2708
+1336
+2178
+1923
+2702
 template
 1
 1
-1
+0
 1.00
-0,387,0,387
+0,694,0,694
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -120,34 +142,34 @@ template
 -1
 -1
 -1
-139
-948
-2758
-3586
+1352
+2256
+2696
+3772
+finalimg
+1
+1
+0
+1.00
+0,999,0,749
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+135
+1039
+2635
+3607
 finaledges
 1
 1
 0
 1.00
-104,896,17,733
-[ImageWndEnd]
-
-[ImageWndStart]
-1
--1
--1
--1
--1
-1311
-2245
-2691
-3785
-finalimg
-1
-1
-1
-1.00
-0,500,33,453
+32,968,0,749
 [ImageWndEnd]
 
 [NumVideoWndsStart]
@@ -164,18 +186,18 @@ finalimg
 -1
 -1
 -1
-1307
-2225
-992
-1889
+1192
+1855
+1014
+1911
 Figure 1
 1
 1
-179.836655
-0.993994
--0.018745
-0.061514
--0.088550
+207.244415
+0.906034
+-0.020386
+0.422399
+0.016299
 [SurfStart]
 corrresult
 Var1
@@ -205,10 +227,10 @@ Var1
 -1
 -1
 -1
-899
-1313
-2439
-3779
+1008
+1411
+2443
+3783
 Figure 1
 1
 [TextVarStart]

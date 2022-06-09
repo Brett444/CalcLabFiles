@@ -5,7 +5,7 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_1.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_2.png)
 1 img1 = Rebin(img1, 4, 4)
 0 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
@@ -17,7 +17,7 @@
 1 imgcanny = CannyEdges(img1, 240, 200)
 1 imgT = img1
 1 dmy = Threshold(imgT, 0, 255, 180)
-1 finaledges = imgT //  imgT, edgesT or imgcanny
+1 finaledges = edgesT //  imgT, edgesT or imgcanny
 1 ksize = 11
 1 rad = (ksize+1)/2
 1 kern = newmat(ksize,ksize,0)
@@ -25,7 +25,7 @@
 1 dmy = Dilate(finaledges, kern)
 1 conncomps = ConnectedComponents(finaledges, 4)
 1 connareas = ConnCompsAreas(conncomps)
-1 conncomps = ConnCompsFilterAreas(conncomps, 35000, 0)
+1 conncomps = ConnCompsFilterAreas(conncomps, 40000, 0)
 1 conncomps = ConnCompsFilterAreas(conncomps, 5000)
 1 finalimg = conncomps // finaledges, conncomps
 1 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
@@ -190,10 +190,10 @@ Figure 1
 1
 1
 207.244415
-0.772350
--0.020050
-0.633499
-0.041866
+0.869438
+-0.025073
+0.493163
+-0.015472
 [SurfStart]
 corrresult
 Var1

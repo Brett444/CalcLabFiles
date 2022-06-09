@@ -5,24 +5,29 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\TP188\screw3.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\CortexHex\Cortex1a.png)
 1 img1 = Resize(img1, 3000, 4000, 1)
+1 img0 = img1
 1 img1 = Rebin(img1, 4, 4)
-1 img1 = Rotate(img1, 30, 0, 1)
+0 img1 = Rotate(img1, 30, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
 1 vedges = Conv(img1, edge_vert)
 1 edges = sqrt(hedges^2 + vedges^2)
 1 edges = ZeroBorder(edges, 5, 5)
 1 edgesT = edges
-1 dmy = Threshold(edgesT, 0, 240, 200)
-1 canny = CannyEdges(img1, 240, 120)
+1 dmy = Threshold(edgesT, 0, 240, 60)
+1 canny = CannyEdges(img1, 140, 80)
 1 imgT = img1
-1 dmy = Threshold(imgT, 0, 255, 200)
+1 dmy = Threshold(imgT, 0, 255, 100)
 1 finaledges = edgesT //  imgT, edgesT or canny
 1 finalimg = finaledges // finaledges, conncomps
 1 finalimg *= 250 / MaxVal(finalimg)
+1 finalimg = CropByValue(finalimg, 0)
+1 imgsize = if(Rows(finalimg) > Cols(finalimg), Rows(finalimg), Cols(finalimg))
+1 imgsize *= 1.05
+1 finalimg = PadToNewSize(finalimg, imgsize, imgsize, 0, 1)
 1 template = BuildTemplate()
-0 template = Resize(template, 680, 620)
+0 template = Resize(template, 680, 680)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
 1 tmresult = GetLayer(tempmatch, 0)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
@@ -34,6 +39,7 @@
 0 template2 *= MaxVal(finalimg) / MaxVal(template2)
 1 template2 = Shift(template2, tmresult{0,1}-1000/2, tmresult{0,0}-750/2, 0)
 1 finalimg += template2
+1 tempa = ReadImage(C:\TempImages\tempa.png)
 [CommandsEnd]
 
 [NumFunctionsStart]
@@ -43,7 +49,48 @@
 [FunctionStart]
 BuildTemplate()
 {
-	retmat = ReadImage(C:\Covisus\ScrewImgs\TP188\TemplateStart2.png);
+	retmat = NewMat(700, 700, 0);
+	sidelen = 295;  // side length
+	len1 = sidelen * sind(60);  // half drop
+	len2 = sidelen * cosd(60);  // step out
+	thick = 25;
+	// top left -> top right
+	row1 = 100;
+	col1 = Cols(retmat)/2 - sidelen/2;
+	row2 = row1;
+	col2 = col1 + sidelen;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	// top right - middle right
+	row1 = row2;
+	col1 = col2;
+	row2 = row1 + len1;
+	col2 = col1 + len2;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	// middle right - bottom right
+	row1 = row2;
+	col1 = col2;
+	row2 = row1 + len1;
+	col2 = col1 - len2;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	// bottom right -> bottom left
+	row1 = row2;
+	col1 = col2;
+	row2 = row1;
+	col2 = col1 - sidelen;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	// bottom left -> middle left
+	row1 = row2;
+	col1 = col2;
+	row2 = row1 - len1;
+	col2 = col1 - len2;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	// middle left -> top left
+	row1 = row2;
+	col1 = col2;
+	row2 = row1 - len1;
+	col2 = col1 + len2;
+	retmat = AddLineSeg(retmat, row1, col1, row2, col2, thick);
+	
 	retmat = CropByValue(retmat, 1);
 	if (Rows(retmat) > Cols(retmat))
 		size = Rows(retmat);
@@ -58,9 +105,9 @@ BuildTemplate()
 		size = Rows(retmat);
 	else
 		size = Cols(retmat);
-	size *= 1.25;
+	size *= 1.1;
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
-	retmat = Blur(retmat, 20);
+	retmat = Blur(retmat, thick);
 
 	return(retmat);
 }
@@ -98,34 +145,16 @@ img1
 -1
 -1
 -1
-1188
-2125
-1723
-2468
-template
-1
-1
-0
-1.00
-0,507,0,507
-[ImageWndEnd]
-
-[ImageWndStart]
-1
--1
--1
--1
--1
 139
-969
+1071
 2635
-3586
+3734
 finaledges
 1
 1
 0
 0.05
-0,914,11,749
+0,999,0,749
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -134,16 +163,34 @@ finaledges
 -1
 -1
 -1
-1323
-2233
-2598
-3666
+1241
+2193
+2666
+3789
 finalimg
 1
 1
 0
 1.00
-0,999,0,749
+0,772,0,772
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1133
+1961
+1495
+2255
+template
+1
+1
+0
+1.00
+0,681,0,681
 [ImageWndEnd]
 
 [NumVideoWndsStart]
@@ -160,18 +207,18 @@ finalimg
 -1
 -1
 -1
-1138
-2131
-1293
-2379
+1161
+2135
+232
+1238
 Figure 1
 1
 1
-0.000000
-0.988134
--0.014569
-0.150690
-0.025916
+89.099991
+0.998232
+-0.054520
+0.020574
+-0.011678
 [SurfStart]
 corrresult
 Var1
@@ -201,10 +248,10 @@ Var1
 -1
 -1
 -1
-965
-1379
-2376
-3716
+1811
+2225
+1334
+2674
 Figure 1
 1
 [TextVarStart]

@@ -5,7 +5,7 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\S62342\screw6.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\S76698\screw8.png)
 1 img1 = Rebin(img1, 4, 4)
 1 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
@@ -13,10 +13,10 @@
 1 edges = sqrt(hedges^2 + vedges^2)
 1 edges = ZeroBorder(edges, 5, 5)
 1 edgesT = edges
-1 dmy = Threshold(edgesT, 0, 240, 200)
-1 canny = CannyEdges(img1, 240, 150)
+1 dmy = Threshold(edgesT, 0, 250, 250)
+1 canny = CannyEdges(img1, 300, 250)
 1 imgT = img1
-1 dmy = Threshold(imgT, 0, 255, 180)
+1 dmy = Threshold(imgT, 0, 250, 150)
 1 finaledges = canny //  imgT, edgesT or canny
 1 finalimg = finaledges // finaledges, conncomps
 1 finalimg *= 250 / MaxVal(finalimg)
@@ -24,7 +24,7 @@
 1 halfsize = 250
 1 finalimg = finalimg{com{0,0}-halfsize:com{0,0}+halfsize, com{0,1}-halfsize:com{0,1}+halfsize}
 1 template = BuildTemplate()
-0 template = Resize(template, 500, 500)
+0 template = Resize(template, 460, 460)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
 1 tmresult = GetLayer(tempmatch, 0)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
@@ -45,7 +45,7 @@
 [FunctionStart]
 BuildTemplate()
 {
-	retmat = ReadImage(C:\Covisus\ScrewImgs\S62342\TemplateStart.png);
+	retmat = ReadImage(C:\Covisus\ScrewImgs\S76698\TemplateStart.png);
 	retmat = retmat{#, 0:749};
 	ksize = 19;
 	rad = (ksize+1)/2;
@@ -59,7 +59,7 @@ BuildTemplate()
 	else
 		size = Cols(retmat);
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
-	newsize = 310;
+	newsize = 360;
 	// add border so we don't have enough room to 
 	// match on particle cloud
 	border = 20;
@@ -102,34 +102,16 @@ img1
 -1
 -1
 -1
-1320
-2230
-1873
-2708
-template
-1
-1
-1
-1.00
-0,387,0,387
-[ImageWndEnd]
-
-[ImageWndStart]
-1
--1
--1
--1
--1
 139
-948
+1012
 2758
-3586
+3820
 finaledges
 1
 1
 0
 1.00
-104,896,17,733
+0,999,0,749
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -138,16 +120,34 @@ finaledges
 -1
 -1
 -1
-1311
-2245
-2691
-3785
+1360
+1922
+2218
+2705
+template
+1
+1
+0
+1.00
+0,379,0,379
+[ImageWndEnd]
+
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1038
+2186
+2717
+3773
 finalimg
 1
 1
 1
 1.00
-0,500,33,453
+0,500,0,500
 [ImageWndEnd]
 
 [NumVideoWndsStart]
@@ -164,18 +164,18 @@ finalimg
 -1
 -1
 -1
-1307
-2225
-992
-1889
+1312
+2230
+1304
+2201
 Figure 1
 1
 1
-179.836655
-0.993994
--0.018745
-0.061514
--0.088550
+159.736664
+0.957470
+-0.006323
+0.280587
+-0.066945
 [SurfStart]
 corrresult
 Var1
@@ -205,10 +205,10 @@ Var1
 -1
 -1
 -1
-899
-1313
-2439
-3779
+898
+1312
+1627
+2967
 Figure 1
 1
 [TextVarStart]

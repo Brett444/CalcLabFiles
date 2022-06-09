@@ -5,24 +5,21 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\S62342\screw6.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\S06050\screw1.png)
 1 img1 = Rebin(img1, 4, 4)
-1 img1 = Rotate(img1, 43, 0, 1)
+0 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
 1 vedges = Conv(img1, edge_vert)
 1 edges = sqrt(hedges^2 + vedges^2)
 1 edges = ZeroBorder(edges, 5, 5)
 1 edgesT = edges
-1 dmy = Threshold(edgesT, 0, 240, 200)
-1 canny = CannyEdges(img1, 240, 150)
+1 dmy = Threshold(edgesT, 0, 240, 100)
+1 canny = CannyEdges(img1, 200, 100)
 1 imgT = img1
-1 dmy = Threshold(imgT, 0, 255, 180)
-1 finaledges = canny //  imgT, edgesT or canny
+1 dmy = Threshold(imgT, 0, 255, 130)
+1 finaledges = imgT //  imgT, edgesT or canny
 1 finalimg = finaledges // finaledges, conncomps
 1 finalimg *= 250 / MaxVal(finalimg)
-1 com = CenterOfMass(finalimg)
-1 halfsize = 250
-1 finalimg = finalimg{com{0,0}-halfsize:com{0,0}+halfsize, com{0,1}-halfsize:com{0,1}+halfsize}
 1 template = BuildTemplate()
 0 template = Resize(template, 500, 500)
 1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
@@ -45,26 +42,30 @@
 [FunctionStart]
 BuildTemplate()
 {
-	retmat = ReadImage(C:\Covisus\ScrewImgs\S62342\TemplateStart.png);
+	retmat = ReadImage(C:\Covisus\ScrewImgs\S06050\Template.png);
 	retmat = retmat{#, 0:749};
-	ksize = 19;
+	ksize = 11;
 	rad = (ksize+1)/2;
 	kern = newmat(ksize,ksize,0);
 	kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1);
 	dmy = Dilate(retmat, kern);
-	retmat = Blur(retmat, ksize);
+	retmat = Blur(retmat, ksize+10);
 	retmat = CropByValue(retmat, 0);
 	if (Rows(retmat) > Cols(retmat))
 		size = Rows(retmat);
 	else
 		size = Cols(retmat);
+	size *= 1.5;
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
-	newsize = 310;
-	// add border so we don't have enough room to 
-	// match on particle cloud
-	border = 20;
-	retmat = Resize(retmat, newsize, newsize, 1);
-	retmat = PadToNewSize(retmat, newsize+border, newsize+border, 0, 1);
+	com = CenterOfMass(retmat);
+	retmat = Shift(retmat, size/2-com{0,0}, size/2-com{0,1}, 0);
+	retmat = CropByValue(retmat, 0);
+	if (Rows(retmat) > Cols(retmat))
+		size = Rows(retmat);
+	else
+		size = Cols(retmat);
+	size *= 1.25;
+	retmat = PadToNewSize(retmat, size, size, 0, 1);
 
 	return(retmat);
 }
@@ -84,10 +85,10 @@ BuildTemplate()
 -1
 -1
 -1
-132
-1021
-1651
-2702
+182
+1071
+1392
+2443
 img1
 1
 1
@@ -102,16 +103,16 @@ img1
 -1
 -1
 -1
-1320
-2230
-1873
-2708
-template
+1323
+2221
+2722
+3789
+finalimg
 1
 1
-1
-1.00
-0,387,0,387
+0
+1.03
+0,999,0,749
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -120,16 +121,16 @@ template
 -1
 -1
 -1
-139
-948
-2758
-3586
+135
+1039
+2635
+3607
 finaledges
 1
 1
 0
 1.00
-104,896,17,733
+32,968,0,749
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -138,16 +139,16 @@ finaledges
 -1
 -1
 -1
-1311
-2245
-2691
-3785
-finalimg
+1359
+2148
+1991
+2703
+template
 1
 1
-1
+0
 1.00
-0,500,33,453
+0,634,0,634
 [ImageWndEnd]
 
 [NumVideoWndsStart]
@@ -164,18 +165,18 @@ finalimg
 -1
 -1
 -1
-1307
-2225
-992
-1889
+1352
+2015
+1118
+2015
 Figure 1
 1
 1
-179.836655
-0.993994
--0.018745
-0.061514
--0.088550
+207.244415
+0.995524
+0.003431
+0.091770
+-0.022344
 [SurfStart]
 corrresult
 Var1
@@ -205,10 +206,10 @@ Var1
 -1
 -1
 -1
-899
-1313
-2439
-3779
+918
+1321
+2228
+3568
 Figure 1
 1
 [TextVarStart]
