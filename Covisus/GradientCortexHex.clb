@@ -128,9 +128,9 @@ BuildTemplate()
 -1
 -1
 144
-1073
+1059
 1403
-2478
+2493
 img1
 1
 1
@@ -172,7 +172,7 @@ finalimg
 1
 0
 1.00
-0,772,0,772
+0,560,0,560
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -181,10 +181,10 @@ finalimg
 -1
 -1
 -1
-1133
-1961
-1495
-2255
+1064
+1869
+1722
+2474
 template
 1
 1
@@ -207,18 +207,18 @@ template
 -1
 -1
 -1
-1161
-2135
-232
-1238
+1151
+2125
+634
+1640
 Figure 1
 1
 1
-89.099991
-0.998232
--0.054520
-0.020574
--0.011678
+39.899979
+-0.931420
+0.001462
+-0.284372
+0.227128
 [SurfStart]
 corrresult
 Var1
@@ -290,6 +290,57 @@ tmresult
 [ScreenResEnd]
 
 [NumCmdEditWndsStart]
-0
+1
 [NumCmdEditWndsEnd]
+
+[CmdEditWndStart]
+2
+0
+2239
+-1
+-1
+20
+1713
+20
+1204
+Figure 1
+img1 = ReadImage(C:\Covisus\ScrewImgs\CortexHex\Cortex1a.png)
+img1 = Resize(img1, 3000, 4000, 1)
+img0 = img1
+img1 = Rebin(img1, 4, 4)
+// img1 = Rotate(img1, 30, 0, 1)
+hedges = Conv(img1, edge_horiz)
+vedges = Conv(img1, edge_vert)
+edges = sqrt(hedges^2 + vedges^2)
+edges = ZeroBorder(edges, 5, 5)
+edgesT = edges
+dmy = Threshold(edgesT, 0, 240, 60)
+canny = CannyEdges(img1, 140, 80)
+imgT = img1
+dmy = Threshold(imgT, 0, 255, 100)
+finaledges = edgesT //  imgT, edgesT or canny
+finalimg = finaledges // finaledges, conncomps
+finalimg *= 250 / MaxVal(finalimg)
+com = CenterOfMass(finalimg)
+halfsize = 320
+finalimg = finalimg{com{0,0}-halfsize:com{0,0}+halfsize, com{0,1}-halfsize:com{0,1}+halfsize}
+// finalimg = CropByValue(finalimg, 0)
+// imgsize = if(Rows(finalimg) > Cols(finalimg), Rows(finalimg), Cols(finalimg))
+// imgsize *= 1.05
+// finalimg = PadToNewSize(finalimg, imgsize, imgsize, 0, 1)
+template = BuildTemplate()
+// template = Resize(template, 680, 680)
+tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
+tmresult = GetLayer(tempmatch, 0)
+tempmatch = TemplateMatchRot(finalimg, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
+tmresult = GetLayer(tempmatch, 0)
+tmresult = tmresult{0, 0:3}
+corrresult = GetLayer(tempmatch, 1)
+template2 = PadToNewSize(template, 750, 1000, 0, 1)
+template2 = Rotate(template2, tmresult{0,2}, 0, 1)
+// template2 *= MaxVal(finalimg) / MaxVal(template2)
+template2 = Shift(template2, tmresult{0,1}-1000/2, tmresult{0,0}-750/2, 0)
+finalimg += template2
+tempa = ReadImage(C:\TempImages\tempa.png)
+[CmdEditWndEnd]
 

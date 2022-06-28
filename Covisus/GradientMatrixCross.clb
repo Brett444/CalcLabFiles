@@ -5,7 +5,7 @@
 [NotesEnd]
 
 [CommandsStart]
-1 img1 = ReadImage(C:\Covisus\ScrewImgs\TriHead\screw1G_2.png)
+1 img1 = ReadImage(C:\Covisus\ScrewImgs\MCross\Cross1.png)
 1 img1 = Rebin(img1, 4, 4)
 0 img1 = Rotate(img1, 43, 0, 1)
 1 hedges = Conv(img1, edge_horiz)
@@ -13,36 +13,24 @@
 1 edges = sqrt(hedges^2 + vedges^2)
 1 edges = ZeroBorder(edges, 5, 5)
 1 edgesT = edges
-1 dmy = Threshold(edgesT, 0, 240, 170)
-1 imgcanny = CannyEdges(img1, 240, 200)
+1 dmy = Threshold(edgesT, 0, 240, 100)
+1 canny = CannyEdges(img1, 200, 100)
 1 imgT = img1
-1 dmy = Threshold(imgT, 0, 255, 180)
-1 finaledges = edgesT //  imgT, edgesT or imgcanny
-1 ksize = 11
-1 rad = (ksize+1)/2
-1 kern = newmat(ksize,ksize,0)
-1 kern = AddDisk(kern, rad-1, rad-1, rad, 1, 1)
-1 dmy = Dilate(finaledges, kern)
-1 conncomps = ConnectedComponents(finaledges, 4)
-1 connareas = ConnCompsAreas(conncomps)
-1 conncomps = ConnCompsFilterAreas(conncomps, 40000, 0)
-1 conncomps = ConnCompsFilterAreas(conncomps, 5000)
-1 finalimg = conncomps // finaledges, conncomps
-1 dmy = Threshold(finalimg, 0, MaxVal(finalimg), 1)  // make all conncomps region the same val
-1 dmy = Dilate(finalimg, kern)
-1 finalimg = Blur(finalimg, 25)
+1 dmy = Threshold(imgT, 0, 255, 130)
+1 finaledges = edgesT //  imgT, edgesT or canny
+1 finalimg = finaledges // finaledges, conncomps
 1 finalimg *= 250 / MaxVal(finalimg)
 1 template = BuildTemplate()
-0 template = Resize(template, 500, 500)
-1 tempmatch = TemplateMatchRot(conncomps, template, 1, 0, 355, 5)
+1 template = Resize(template, 390, 390)
+1 tempmatch = TemplateMatchRot(finalimg, template, 1, 0, 355, 5)
 1 tmresult = GetLayer(tempmatch, 0)
-1 tempmatch = TemplateMatchRot(conncomps, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
+1 tempmatch = TemplateMatchRot(finalimg, template, 1, tmresult{0,2}-5, tmresult{0,2}+5, 1)
 1 tmresult = GetLayer(tempmatch, 0)
 1 tmresult = tmresult{0, 0:3}
 1 corrresult = GetLayer(tempmatch, 1)
 1 template2 = PadToNewSize(template, 750, 1000, 0, 1)
 1 template2 = Rotate(template2, tmresult{0,2}, 0, 1)
-0 template2 *= 250/MaxVal(template2)
+0 template2 *= MaxVal(finalimg) / MaxVal(template2)
 1 template2 = Shift(template2, tmresult{0,1}-1000/2, tmresult{0,0}-750/2, 0)
 1 finalimg += template2
 [CommandsEnd]
@@ -54,36 +42,25 @@
 [FunctionStart]
 BuildTemplate()
 {
-	thick = 1;
-	retmat = newmat(1000, 1000, 0);
-	
-	retmat = AddLineSeg(retmat, 445, 322, 124, 362, thick);
-	retmat = AddLineSeg(retmat, 124, 362, 103, 502, thick);
-	retmat = AddLineSeg(retmat, 103, 502, 215, 500, thick);
-	retmat = AddLineSeg(retmat, 215, 500, 420, 770, thick);
-	retmat = AddLineSeg(retmat, 420, 770, 545, 714, thick);
-	retmat = AddLineSeg(retmat, 545, 714, 492, 618, thick);
-	retmat = AddLineSeg(retmat, 492, 618, 621, 306, thick);
-	retmat = AddLineSeg(retmat, 621, 306, 510, 218, thick);
-	retmat = AddLineSeg(retmat, 510, 218, 445, 322, thick);
-	retmat = CropByValue(retmat, 0);
+	retmat = ReadImage(C:\Covisus\ScrewImgs\MCross\Template2.png);
+	retmat = CropByValue(retmat, 1);
 	if (Rows(retmat) > Cols(retmat))
 		size = Rows(retmat);
 	else
 		size = Cols(retmat);
-	
 	size *= 1.5;
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
 	com = CenterOfMass(retmat);
 	retmat = Shift(retmat, size/2-com{0,0}, size/2-com{0,1}, 0);
-	retmat = CropByValue(retmat, 0);
+	retmat = CropByValue(retmat, 1);
 	if (Rows(retmat) > Cols(retmat))
 		size = Rows(retmat);
 	else
 		size = Cols(retmat);
-	size *= 1.25;
+	size *= 1.15;
 	retmat = PadToNewSize(retmat, size, size, 0, 1);
-	
+	retmat = Blur(retmat, 10);
+
 	return(retmat);
 }
 [FunctionEnd]
@@ -120,34 +97,16 @@ img1
 -1
 -1
 -1
-1336
-2178
-1923
-2702
-template
-1
-1
-0
-1.00
-0,694,0,694
-[ImageWndEnd]
-
-[ImageWndStart]
-1
--1
--1
--1
--1
-1337
-2256
-2696
-3772
+1253
+2221
+2619
+3789
 finalimg
 1
 1
-0
+1
 1.00
-0,999,0,749
+191,757,91,529
 [ImageWndEnd]
 
 [ImageWndStart]
@@ -168,6 +127,24 @@ finaledges
 32,968,0,749
 [ImageWndEnd]
 
+[ImageWndStart]
+1
+-1
+-1
+-1
+-1
+1359
+2148
+1991
+2703
+template
+1
+1
+0
+1.00
+0,389,0,389
+[ImageWndEnd]
+
 [NumVideoWndsStart]
 0
 [NumVideoWndsEnd]
@@ -182,18 +159,18 @@ finaledges
 -1
 -1
 -1
-1192
-1855
-1014
-1911
+1352
+2015
+1118
+2015
 Figure 1
 1
 1
-207.244415
-0.869438
--0.025073
-0.493163
--0.015472
+592.836487
+0.990946
+0.012272
+0.116723
+0.065205
 [SurfStart]
 corrresult
 Var1
@@ -223,10 +200,10 @@ Var1
 -1
 -1
 -1
-1008
-1411
-2443
-3783
+918
+1321
+2228
+3568
 Figure 1
 1
 [TextVarStart]
