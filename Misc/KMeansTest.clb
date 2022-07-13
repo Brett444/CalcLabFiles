@@ -1,0 +1,143 @@
+[Format=2.0]
+
+[NotesStart]
+
+[NotesEnd]
+
+[CommandsStart]
+1 m1 = RandUnif(100, 2, 5, 10)
+1 x1s = m1{#, 0}
+1 y1s = m1{#, 1}
+1 m2 = RandUnif(150, 2, 20, 30)
+1 x2s = m2{#, 0}
+1 y2s = m2{#, 1}
+1 m3 = RandUnif(200, 2, 5, 15)
+1 m3{#, 1} = RandUnif(200, 1, 15, 25)
+1 x3s = m3{#, 0}
+1 y3s = m3{#, 1}
+1 designmat = Concat(0, m1, m2, m3)
+1 designmat = Shuffle(designmat, 0)
+1 labels = KMeans(designmat, 3)
+[CommandsEnd]
+
+[NumFunctionsStart]
+0
+[NumFunctionsEnd]
+
+[NumGraphWndsStart]
+1
+[NumGraphWndsEnd]
+
+[GraphWndStart]
+1
+-1
+-1
+-1
+-1
+92
+1780
+1496
+3828
+Figure 1
+1.132172
+33.944672
+10.000000
+10.000000
+-1.747788
+35.586283
+10.000000
+0.000000
+1
+1
+0
+0
+3
+[DataSetStart]
+y1s
+x1s
+5
+1
+0
+0
+255
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+y2s
+x2s
+5
+1
+255
+0
+0
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[DataSetStart]
+y3s
+x3s
+5
+1
+0
+128
+64
+0
+0.000000
+1.000000
+1
+[DataSetEnd]
+
+[GraphWndEnd]
+
+[NumImageWndsStart]
+0
+[NumImageWndsEnd]
+
+[NumVideoWndsStart]
+0
+[NumVideoWndsEnd]
+
+[NumSurfWndsStart]
+0
+[NumSurfWndsEnd]
+
+[NumTextWndsStart]
+0
+[NumTextWndsEnd]
+
+[NotesWndStart]
+0
+0
+0
+0
+0
+0
+0
+0
+0
+[NotesWndEnd]
+
+[NumFuncWndsStart]
+0
+[NumFuncWndsEnd]
+
+[NumSigFigsStart]
+6
+[NumSigFigsEnd]
+
+[ScreenResStart]
+3840
+2400
+[ScreenResEnd]
+
+[NumCmdEditWndsStart]
+0
+[NumCmdEditWndsEnd]
+
